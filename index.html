@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restify</title>
+
+    <!-- Enlace al CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <header>
+        <!-- <h1>Restify</h1> -->
+    </header>
+
+    <main>
+        <section id="temporizadores">
+            <div class="temporizador" id="ciclos" >
+                <label id="cycle-count-label">Ciclos</label>
+                <input type="number" id="cycle-count" min="1" max="999" value="1"/>
+            </div>
+            <div class="temporizador" id="temporizadorEstudio">
+                <label>Timer 1</label>
+                <div class="qt-row">
+                    <input type="number" id="qt1-min" class="qt-min" min="0" max="60" value="0" /> <!-- minutos -->
+                    <input type="number" id="qt1-sec" class="qt-sec" min="0" max="60" value="0" /> <!-- segundos; se normaliza si es 60 -->
+                    <div class="qt-display" id="qt1-display">00:00</div>
+                </div>
+            </div>
+
+            <div class="temporizador" id="temporizadorDescanso">
+                <label>Timer 2</label>
+                <div class="qt-row">
+                    <input type="number" id="qt2-min" class="qt-min" min="0" max="60" value="0" />
+                    <input type="number" id="qt2-sec" class="qt-sec" min="0" max="60" value="0" />
+                    <div class="qt-display" id="qt2-display">00:00</div>
+                </div>
+            </div>
+            <div class="temporizador" id="controles" >
+                <button id="qt1-start">Start</button>
+                <button id="qt1-pause">Pause</button>
+                <button id="qt1-reset">Reset</button>
+            </div>
+        </section>
+        
+        <!-- Sección del reproductor de música -->
+        <section id="player">
+
+        </section>
+
+        <!-- Sección de minijuegos -->
+        <section id="games">
+            
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 Restify — Proyecto multimedia</p>
+    </footer>
+
+    <!-- Scripts JS -->
+    <script src="js/pomodoro.js"></script>
+</body>
+</html>
