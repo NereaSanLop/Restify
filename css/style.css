@@ -76,7 +76,20 @@ footer {
     display: flex;
     gap: 0.6rem;
     align-items: center;
+    background: #005fa37f;
+    color: #fff;
+    padding: 1rem;
+    width: 100%;
+    max-width: none;
+    align-self: stretch;
+    box-sizing: border-box;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    margin-top: calc(50% - 50vw);
+    box-sizing: border-box;
 }
+
 
 /* Forzar que temporizadorEstudio quede a la derecha de temporizadorDescanso */
 #ciclos { order: 0; }
@@ -93,4 +106,19 @@ footer {
     gap: 0.5rem;
     justify-content: flex-end;
     flex-wrap: wrap;
+}
+
+/* Asegurar que los inputs y displays se vean sobre fondo oscuro */
+#temporizadores input[type="number"] {
+    background: #fff;
+    color: #000;
+    border: 1px solid rgba(0,0,0,0.12);
+    border-radius: 4px;
+    padding: 0.25rem 0.4rem;
+    width: 4.5rem;
+}
+
+#temporizadores .qt-display {
+    background: rgba(255,255,255,0.95);
+    color: #000;
 }
