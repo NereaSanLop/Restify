@@ -8,7 +8,7 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    background-image: linear-gradient(rgba(0,95,160,0.35), rgba(0,95,160,0.35)), url('../assets/img/lofi_boy.jpg');
+    background-image: linear-gradient(rgba(0,95,160,0.35), rgba(0,95,160,0.35)), url('/Restify/assets/img/lofi_boy.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
