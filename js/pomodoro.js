@@ -19,6 +19,8 @@
     const pauseBtn = q('qt1-pause');
     const resetBtn = q('qt1-reset');
     const cycleCountInput = q('cycle-count');
+    // inputs que deben inhabilitarse/habilitarse
+    const inputsToToggle = [qt1Min, qt1Sec, qt2Min, qt2Sec, cycleCountInput];
 
     // State
     let intervalId = null;
@@ -28,6 +30,12 @@
     let cyclesInitial = 0;
     let cyclesLeft = 0;
     let isInitialized = false; // si ya leímos inputs para iniciar la secuencia
+
+    function setInputsDisabled(disabled) {
+        inputsToToggle.forEach(el => {
+            if (el) el.disabled = Boolean(disabled);
+        });
+    }
 
     function readInputs() {
         // Normalize seconds > 59
@@ -123,6 +131,9 @@
         qt2Display.textContent = formatSeconds(rem2);
         cycleCountInput.value = cyclesLeft;
 
+        // bloquear inputs al iniciar
+        setInputsDisabled(true);
+
         // Si currentPhase está a 0 (por ejemplo tras pausa) elegir fase según rem
         if (currentPhase === 0) {
             if (rem1 > 0) currentPhase = 1;
@@ -152,6 +163,8 @@
         stopInterval();
         currentPhase = 0;
         isInitialized = false;
+        // al terminar la secuencia, permitir editar de nuevo
+        setInputsDisabled(false);
     }
 
     function pauseSequence() {
@@ -163,6 +176,8 @@
         endSequence();
         readInputs(); // reset to inputs (también establece cyclesLeft)
         renderAll();
+        // asegurar que al reset se habilitan los inputs
+        setInputsDisabled(false);
     }
 
     // Keep displays updated when changing inputs (only when stopped)

@@ -127,6 +127,23 @@ main {
     box-sizing: border-box;
 }
 
+/* estilo para inputs deshabilitados: fondo gris y cursor no-allowed */
+#temporizadores input[type="number"]:disabled {
+    background: #eceff1;
+    color: #5f6368;
+    border-color: rgba(0,0,0,0.06);
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+/* si al menos un input de la fila está deshabilitado, ajustar el display de tiempo */
+#temporizadores input[type="number"]:disabled ~ .qt-display,
+#temporizadores .qt-display:empty { /* garantía visual si está vacío */
+    background: #f4f6f8;
+    color: #333;
+    border-color: rgba(0,0,0,0.06);
+}
+
 /* evitar que el contenedor de controles se estire demasiado */
 #controles {
     flex: 0 0 auto; /* mantiene su tamaño natural */
