@@ -44,9 +44,10 @@
         }
 
         function loadDefaultFallback() {
+            // rutas relativas desde la página: assets/music/...
             return [
-                '../assets/music/song1.mp3',
-                '../assets/music/song2.mp3'
+                'assets/music/song1.mp3',
+                'assets/music/song2.mp3'
             ];
         }
 
@@ -103,6 +104,12 @@
         audio.addEventListener('timeupdate', updateProgress);
         audio.addEventListener('loadedmetadata', updateProgress);
         audio.addEventListener('ended', () => nextTrack(true));
+        // si el src falla (404 u otro error), avanzar a la siguiente pista
+        audio.addEventListener('error', (e) => {
+            console.warn('player: error cargando pista, pasando a la siguiente.', e);
+            // intentar siguiente pista para evitar quedarse bloqueado
+            nextTrack(true);
+        });
 
         progress.addEventListener('click', (e) => {
             if (!audio.duration || !isFinite(audio.duration)) return;
