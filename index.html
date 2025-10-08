@@ -46,7 +46,23 @@
         
         <!-- Sección del reproductor de música -->
         <section id="player">
+            <div class="player-inner">
+                <!-- barra de progreso (click para seek) -->
+                <div id="player-progress" class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                    <div id="player-progress-bar" class="progress-bar"></div>
+                </div>
 
+                <!-- controles: retroceder / play / pause / avanzar -->
+                <div class="player-controls">
+                    <button id="player-rew" title="Retroceder 10s">⏮</button>
+                    <button id="player-play" title="Reproducir">▶</button>
+                    <button id="player-pause" title="Pausar">⏸</button>
+                    <button id="player-fwd" title="Avanzar 10s">⏭</button>
+                </div>
+
+                <!-- elemento audio (puedes poner src dinámicamente o en el atributo src) -->
+                <audio id="audio" preload="metadata"></audio>
+            </div>
         </section>
 
         <!-- Sección de minijuegos -->
@@ -60,5 +76,6 @@
 
     <!-- Scripts JS -->
     <script src="js/pomodoro.js"></script>
-</body>
-</html>
+    <script src="js/player.js"></script>
+ </body>
+ </html>

@@ -8,7 +8,7 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    background-image: linear-gradient(rgba(0,95,160,0.35), rgba(0,95,160,0.35)), url('/Restify/assets/img/lofi_boy.jpg');
+    background-image: linear-gradient(rgba(0,95,160,0.35), rgba(0,95,160,0.35)), url('../assets/img/lofi_boy.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -147,4 +147,64 @@ main {
 /* evitar que el contenedor de controles se estire demasiado */
 #controles {
     flex: 0 0 auto; /* mantiene su tamaño natural */
+}
+
+/* Reproductor: situado a la derecha debajo de #temporizadores */
+#player {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end; /* alinear a la derecha */
+    margin-top: 0.75rem;
+    box-sizing: border-box;
+}
+
+.player-inner {
+    width: 360px;
+    background: rgba(255,255,255,0.06);
+    padding: 0.6rem;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+/* barra de progreso arriba de los botones */
+.progress {
+    width: 100%;
+    height: 8px;
+    background: rgba(255,255,255,0.18);
+    border-radius: 6px;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    margin-bottom: 0.6rem;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg,#ffd54f,#ffa000);
+    border-radius: 6px 0 0 6px;
+}
+
+/* controles en horizontal */
+.player-controls {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    align-items: center;
+}
+
+/* botones simples */
+.player-controls button {
+    background: rgba(255,255,255,0.95);
+    border: none;
+    padding: 0.4rem 0.6rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.player-controls button:disabled {
+    background: #e0e0e0;
+    cursor: not-allowed;
+    color: #6d6d6d;
 }
