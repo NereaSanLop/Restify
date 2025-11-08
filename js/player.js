@@ -8,6 +8,7 @@
         const fwdBtn = document.getElementById('player-fwd');
         const progress = document.getElementById('player-progress');
         const progressBar = document.getElementById('player-progress-bar');
+        const playerTrack = document.getElementById('player-track');
         const SEEK_SECONDS = 10;
 
         if (!audio || !playBtn || !pauseBtn || !rewBtn || !fwdBtn || !progress || !progressBar) {
@@ -61,12 +62,30 @@
         function loadTrack(index, autoplay = false) {
             if (!playlist.length) return;
             currentIndex = ((index % playlist.length) + playlist.length) % playlist.length;
-            audio.src = playlist[currentIndex];
+
+            // Soporte para playlist con strings u objetos { src, title }
+            const entry = playlist[currentIndex];
+            const src = typeof entry === 'string' ? entry : (entry && entry.src) ? entry.src : '';
+            const title = (entry && (entry.title || entry.name)) ? (entry.title || entry.name) : null;
+
+            if (!src) return;
+
+            // Guarda título en data-title si viene en la playlist
+            if (title) {
+                audio.dataset.title = title;
+            } else {
+                delete audio.dataset.title;
+            }
+
+            audio.src = src;
+
+            // Actualiza el nombre de la pista de inmediato
+            updateTrackName();
+
             isLoaded = true;
             progressBar.style.width = '0%';
             progress.setAttribute('aria-valuenow', 0);
             if (autoplay) {
-                // play puede estar bloqueado hasta interactuar; intentamos y silenciosamente ignoramos el fallo
                 audio.play().catch(e => { console.info('player: autoplay bloqueado hasta interacción del usuario.'); });
             }
         }
@@ -96,13 +115,37 @@
             loadTrack(currentIndex - 1, autoplay);
         }
 
+        function extractFileName(url) {
+            try {
+                const u = new URL(url, window.location.href);
+                const name = u.pathname.substring(u.pathname.lastIndexOf('/') + 1);
+                return decodeURIComponent(name) || 'Unknown';
+            } catch (e) {
+                return url || 'Unknown';
+            }
+        }
+
+        function updateTrackName() {
+            if (!playerTrack) return;
+            if (!audio || !audio.src) {
+                playerTrack.textContent = 'No song selected';
+                return;
+            }
+            const title = audio.dataset && audio.dataset.title ? audio.dataset.title : extractFileName(audio.src);
+            playerTrack.textContent = title;
+        }
+
         playBtn.addEventListener('click', () => playCurrent());
         pauseBtn.addEventListener('click', () => pauseCurrent());
         rewBtn.addEventListener('click', () => prevTrack());
         fwdBtn.addEventListener('click', () => nextTrack());
 
         audio.addEventListener('timeupdate', updateProgress);
-        audio.addEventListener('loadedmetadata', updateProgress);
+        audio.addEventListener('loadedmetadata', () => {
+            updateProgress();
+            updateTrackName();
+        });
+        audio.addEventListener('loadstart', updateTrackName);
         audio.addEventListener('ended', () => nextTrack(true));
         // si el src falla (404 u otro error), avanzar a la siguiente pista
         audio.addEventListener('error', (e) => {

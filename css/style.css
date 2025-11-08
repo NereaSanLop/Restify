@@ -159,10 +159,11 @@ main {
 }
 
 .player-inner {
-    width: 360px;
-    background: rgba(255,255,255,0.06);
-    padding: 0.6rem;
-    border-radius: 8px;
+    width: 100%;
+    max-width: 360px;
+    background: rgba(255,255,255,0.08);
+    padding: 0.75rem;
+    border-radius: 12px;
     box-sizing: border-box;
 }
 
@@ -172,7 +173,6 @@ main {
     height: 8px;
     background: rgba(255,255,255,0.18);
     border-radius: 6px;
-    position: relative;
     cursor: pointer;
     overflow: hidden;
     margin-bottom: 0.6rem;
@@ -203,8 +203,119 @@ main {
     font-size: 1rem;
 }
 
-.player-controls button:disabled {
-    background: #e0e0e0;
-    cursor: not-allowed;
-    color: #6d6d6d;
+.player-controls button:hover { background:#ffe082; }
+.player-controls button:disabled { opacity: .6; cursor: not-allowed; }
+
+.player-track {
+    text-align: center;
+    font-weight: 600;
+    margin: 4px 0 8px;
+    font-size: .95rem;
+    word-break: break-word;
+}
+
+/* Fila para botón + reproductor */
+.player-row {
+    display: flex;
+    align-items: center;     /* centra verticalmente el botón respecto al player */
+    justify-content: center; /* centra el conjunto; quita si lo quieres pegado a la izquierda */
+    gap: 12px;
+}
+
+/* GRID 4x4 */
+#layout-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(180px, 1fr));
+    grid-template-rows: repeat(4, minmax(120px, auto));
+    gap: 12px;
+    width: 100%;
+    max-width: 2000px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    box-sizing: border-box;
+
+    grid-template-areas:
+        "cycles   t1       t2       controls"
+        "sudoku   .        .        player"
+        ".        .        .        ."
+        ".        .        .        .";
+    grid-auto-flow: dense;
+}
+.grid-cell {
+    background: rgba(255,255,255,0);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+    backdrop-filter: blur(2px);
+}
+
+/* Botón Sudoku (usa assets/img/sudoku.png) */
+.icon-button#btn-sudoku {
+    width: 196px;
+    height: 62px;
+    border: none;
+    border-radius: 15px;
+    background: url('../assets/img/sudoku.png') no-repeat center / 100%;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(0,0,0,0);
+}
+.icon-button#btn-sudoku:hover { box-shadow: 0 6px 18px rgba(0,0,0,0.3); }
+.icon-button#btn-sudoku:focus-visible { outline: 2px solid #3b82f6; outline-offset: 3px; }
+/* Centrar el botón de Sudoku en su cuadrante (r1c0) */
+#layout-grid .r1c0 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Asignación de áreas */
+.area-cycles   { grid-area: cycles; }
+.area-t1       { grid-area: t1; }
+.area-t2       { grid-area: t2; }
+.area-controls { grid-area: controls; }
+.area-sudoku   { grid-area: sudoku; }
+.area-player   { grid-area: player; }
+
+/* Centrar contenidos de ciertas celdas */
+.area-sudoku,
+.area-player,
+.area-controls,
+.area-cycles,
+.area-t1,
+.area-t2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Mantener el botón Sudoku centrado dentro de su celda */
+.area-sudoku { padding: 0; }
+
+/* Adaptación tablet (<= 1024px): 3 columnas */
+@media (max-width: 1024px) {
+    #layout-grid {
+        grid-template-columns: repeat(3, minmax(180px, 1fr));
+        grid-template-areas:
+            "cycles   t1       t2"
+            "controls sudoku   player"
+            ".        .        ."
+            ".        .        .";
+    }
+}
+
+/* Adaptación móvil (<= 640px): 1 columna en pila */
+@media (max-width: 640px) {
+    #layout-grid {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "cycles"
+            "t1"
+            "t2"
+            "controls"
+            "sudoku"
+            "player";
+    }
+    .grid-cell { min-height: 120px; }
+    .player-inner { max-width: 100%; }
 }
