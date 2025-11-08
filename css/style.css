@@ -1,7 +1,8 @@
-/* --- ESTILOS BASE --- */
+/* ==================================================
+   BASE
+================================================== */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    /* background:#e2edf0;*/
     color: #333;
     margin: 0;
     padding: 0;
@@ -15,7 +16,90 @@ body {
     background-blend-mode: overlay;
 }
 
-/* Estilo compacto para cada temporizador */
+main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    padding: 2rem;
+}
+
+/* ==================================================
+   GRID LAYOUT
+================================================== */
+#layout-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(180px, 1fr));
+    grid-template-rows: repeat(4, minmax(120px, auto));
+    gap: 12px;
+    width: 100%;
+    max-width: 2000px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    box-sizing: border-box;
+    grid-template-areas:
+        "cycles   t1       t2       controls"
+        "sudoku   .        .        player"
+        ".        .        .        ."
+        ".        .        .        .";
+    grid-auto-flow: dense;
+}
+
+.grid-cell {
+    background: rgba(255,255,255,0);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+    backdrop-filter: blur(2px);
+}
+
+/* Asignación de áreas */
+.area-cycles   { grid-area: cycles; }
+.area-t1       { grid-area: t1; }
+.area-t2       { grid-area: t2; }
+.area-controls { grid-area: controls; }
+.area-sudoku   { grid-area: sudoku; }
+.area-player   { grid-area: player; }
+
+/* Centrado de contenido en celdas clave */
+.area-sudoku,
+.area-player,
+.area-controls,
+.area-cycles,
+.area-t1,
+.area-t2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Centrar botón Sudoku dentro de su celda */
+#layout-grid .r1c0 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ==================================================
+   TEMPORIZADORES
+================================================== */
+#temporizadores {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: space-between;
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    margin-top: calc(50% - 50vw); /* revisar si realmente se desea este desplazamiento */
+    background: #005fa374;
+    color: #fff;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
 .temporizador {
     display: flex;
     flex-direction: column;
@@ -25,20 +109,16 @@ body {
     border-radius: 6px;
     min-width: 140px;
     box-sizing: border-box;
-
-    /* crecer para repartir el espacio (como justificar) */
     flex: 1 1 0;
     min-width: 120px;
 }
 
-/* Fila con input y display */
 .qt-row {
     display: flex;
     gap: 0.5rem;
     align-items: center;
 }
 
-/* Mostrar tiempo en monoespacio */
 .qt-display {
     font-family: monospace;
     min-width: 72px;
@@ -49,73 +129,22 @@ body {
     box-sizing: border-box;
 }
 
-/* --- CONTENIDO PRINCIPAL --- */
-main {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2rem;
-    padding: 2rem;
-}
-
-/* Contenedor de los temporizadores: los coloca en línea */
-#temporizadores {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-
-    /* justificar como "texto justificado": espacio entre los items */
-    justify-content: space-between;
-
-    /* ocupar todo el ancho de la ventana */
-    width: 100vw;
-    margin-left: calc(50% - 50vw);
-    margin-right: calc(50% - 50vw);
-    margin-top: calc(50% - 50vw);
-
-    /* apariencia */
-    background:#005fa374;
-    color: #fff;
-    padding: 1rem;
-    box-sizing: border-box;
-}
-
-/* permitir que cada bloque ocupe el espacio disponible,
-   pero impedir que el contenido interno desborde */
-.temporizador {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    background: rgba(255,255,255,0.06);
-    padding: 0.6rem;
-    border-radius: 6px;
-    min-width: 140px;
-    box-sizing: border-box;
-
-    /* crecer para repartir el espacio (como justificar) */
-    flex: 1 1 0;
-    min-width: 120px;
-}
-
-/* Forzar que temporizadorEstudio quede a la derecha de temporizadorDescanso */
-#ciclos { order: 0; }
+/* Orden específico */
+#ciclos              { order: 0; }
 #temporizadorEstudio { order: 1; }
-#temporizadorDescanso { order: 2; }
-#controles { 
-    order: 3; 
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
+#temporizadorDescanso{ order: 2; }
+#controles {
+    order: 3;
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: 0.5rem;
     justify-content: flex-end;
     flex-wrap: wrap;
+    flex: 0 0 auto; /* no crecer demasiado */
 }
 
-/* Asegurar que los inputs y displays se vean sobre fondo oscuro */
+/* Inputs */
 #temporizadores input[type="number"] {
     background: #fff;
     color: #000;
@@ -127,7 +156,6 @@ main {
     box-sizing: border-box;
 }
 
-/* estilo para inputs deshabilitados: fondo gris y cursor no-allowed */
 #temporizadores input[type="number"]:disabled {
     background: #eceff1;
     color: #5f6368;
@@ -136,24 +164,20 @@ main {
     box-shadow: none;
 }
 
-/* si al menos un input de la fila está deshabilitado, ajustar el display de tiempo */
 #temporizadores input[type="number"]:disabled ~ .qt-display,
-#temporizadores .qt-display:empty { /* garantía visual si está vacío */
+#temporizadores .qt-display:empty {
     background: #f4f6f8;
     color: #333;
     border-color: rgba(0,0,0,0.06);
 }
 
-/* evitar que el contenedor de controles se estire demasiado */
-#controles {
-    flex: 0 0 auto; /* mantiene su tamaño natural */
-}
-
-/* Reproductor: situado a la derecha debajo de #temporizadores */
+/* ==================================================
+   REPRODUCTOR
+================================================== */
 #player {
     width: 100%;
     display: flex;
-    justify-content: flex-end; /* alinear a la derecha */
+    justify-content: flex-end;
     margin-top: 0.75rem;
     box-sizing: border-box;
 }
@@ -167,7 +191,14 @@ main {
     box-sizing: border-box;
 }
 
-/* barra de progreso arriba de los botones */
+.player-track {
+    text-align: center;
+    font-weight: 600;
+    margin: 4px 0 8px;
+    font-size: .95rem;
+    word-break: break-word;
+}
+
 .progress {
     width: 100%;
     height: 8px;
@@ -181,11 +212,10 @@ main {
 .progress-bar {
     height: 100%;
     width: 0%;
-    background: linear-gradient(90deg,#ffd54f,#ffa000);
+    background: linear-gradient(90deg,#fce7a4,#ff8282);
     border-radius: 6px 0 0 6px;
 }
 
-/* controles en horizontal */
 .player-controls {
     display: flex;
     gap: 0.5rem;
@@ -193,9 +223,8 @@ main {
     align-items: center;
 }
 
-/* botones simples */
 .player-controls button {
-    background: rgba(255,255,255,0.95);
+    background-color: rgba(255,255,255,0.95);
     border: none;
     padding: 0.4rem 0.6rem;
     border-radius: 6px;
@@ -203,96 +232,72 @@ main {
     font-size: 1rem;
 }
 
-.player-controls button:hover { background:#ffe082; }
-.player-controls button:disabled { opacity: .6; cursor: not-allowed; }
-
-.player-track {
-    text-align: center;
-    font-weight: 600;
-    margin: 4px 0 8px;
-    font-size: .95rem;
-    word-break: break-word;
+.player-controls button:hover {
+    background-color: #ffe082;
 }
 
-/* Fila para botón + reproductor */
+.player-controls button:disabled {
+    opacity: .6;
+    cursor: not-allowed;
+}
+
+/* Botones con iconos */
+.player-btn {
+    width: 32px;
+    height: 32px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 32px 32px;
+    padding: 0;
+}
+
+.player-btn:hover {
+    background-size: 34px 34px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+}
+
+.player-btn-rew   { background-image: url('../assets/img/rewind_button.png'); }
+.player-btn-play  { background-image: url('../assets/img/play_button.png'); }
+.player-btn-pause { background-image: url('../assets/img/stop_button.png'); }
+.player-btn-fwd   { background-image: url('../assets/img/skip_button.png'); }
+
+/* Fila combinada opcional (si se usa) */
 .player-row {
     display: flex;
-    align-items: center;     /* centra verticalmente el botón respecto al player */
-    justify-content: center; /* centra el conjunto; quita si lo quieres pegado a la izquierda */
+    align-items: center;
+    justify-content: center;
     gap: 12px;
 }
 
-/* GRID 4x4 */
-#layout-grid {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(180px, 1fr));
-    grid-template-rows: repeat(4, minmax(120px, auto));
-    gap: 12px;
-    width: 100%;
-    max-width: 2000px;
-    margin: 2rem auto;
-    padding: 0 1rem;
-    box-sizing: border-box;
-
-    grid-template-areas:
-        "cycles   t1       t2       controls"
-        "sudoku   .        .        player"
-        ".        .        .        ."
-        ".        .        .        .";
-    grid-auto-flow: dense;
-}
-.grid-cell {
-    background: rgba(255,255,255,0);
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 10px;
-    padding: 10px;
-    box-sizing: border-box;
-    backdrop-filter: blur(2px);
-}
-
-/* Botón Sudoku (usa assets/img/sudoku.png) */
+/* ==================================================
+   BOTÓN SUDOKU
+================================================== */
 .icon-button#btn-sudoku {
-    width: 196px;
-    height: 62px;
+    width: 274px;
+    height: 87px;
     border: none;
-    border-radius: 15px;
+    border-radius: 20px;
     background: url('../assets/img/sudoku.png') no-repeat center / 100%;
     cursor: pointer;
     box-shadow: 0 4px 14px rgba(0,0,0,0);
 }
-.icon-button#btn-sudoku:hover { box-shadow: 0 6px 18px rgba(0,0,0,0.3); }
-.icon-button#btn-sudoku:focus-visible { outline: 2px solid #3b82f6; outline-offset: 3px; }
-/* Centrar el botón de Sudoku en su cuadrante (r1c0) */
-#layout-grid .r1c0 {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+
+.icon-button#btn-sudoku:hover {
+    box-shadow: 0 6px 18px rgba(0,0,0,0.3);
 }
 
-/* Asignación de áreas */
-.area-cycles   { grid-area: cycles; }
-.area-t1       { grid-area: t1; }
-.area-t2       { grid-area: t2; }
-.area-controls { grid-area: controls; }
-.area-sudoku   { grid-area: sudoku; }
-.area-player   { grid-area: player; }
-
-/* Centrar contenidos de ciertas celdas */
-.area-sudoku,
-.area-player,
-.area-controls,
-.area-cycles,
-.area-t1,
-.area-t2 {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.icon-button#btn-sudoku:focus-visible {
+    outline: 2px solid #3b82f6;
+    outline-offset: 3px;
 }
 
-/* Mantener el botón Sudoku centrado dentro de su celda */
 .area-sudoku { padding: 0; }
 
-/* Adaptación tablet (<= 1024px): 3 columnas */
+/* ==================================================
+   MEDIA QUERIES
+================================================== */
+
+/* Tablet (<=1024px) */
 @media (max-width: 1024px) {
     #layout-grid {
         grid-template-columns: repeat(3, minmax(180px, 1fr));
@@ -304,7 +309,7 @@ main {
     }
 }
 
-/* Adaptación móvil (<= 640px): 1 columna en pila */
+/* Móvil (<=640px) */
 @media (max-width: 640px) {
     #layout-grid {
         grid-template-columns: 1fr;
