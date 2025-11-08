@@ -129,6 +129,63 @@ main {
     box-sizing: border-box;
 }
 
+/* Inputs de los timers en el grid */
+.qt-min,
+.qt-sec {
+    background: url('../assets/img/input_box.png') no-repeat center / cover, rgba(255,255,255,0.9);
+    color: #000;
+    border: 1px solid rgba(0,0,0,0.12);
+    border-radius: 4px;
+    padding: 0.25rem 0.4rem;
+    width: 3.5rem;
+    box-sizing: border-box;
+    text-align: center;
+    font-family: monospace;
+    backdrop-filter: blur(5px);
+}
+
+.qt-min:disabled,
+.qt-sec:disabled {
+    background: url('../assets/img/input_box.png') no-repeat center / cover, rgba(236,239,241,0.9);
+    color: #5f6368;
+    border-color: rgba(0,0,0,0.06);
+    cursor: not-allowed;
+}
+
+.qt-min:focus,
+.qt-sec:focus {
+    outline: 2px solid #3b82f6;
+    outline-offset: 1px;
+    background: url('../assets/img/input_box.png') no-repeat center / cover, rgba(240,248,255,0.95);
+}
+
+/* Input de ciclos */
+#cycle-count {
+    background: url('../assets/img/input_box.png') no-repeat center / cover, rgba(255,255,255,0.9);
+    color: #000;
+    border: 1px solid rgba(0,0,0,0.12);
+    border-radius: 4px;
+    padding: 0.25rem 0.4rem;
+    width: 4rem;
+    box-sizing: border-box;
+    text-align: center;
+    font-family: monospace;
+    backdrop-filter: blur(5px);
+}
+
+#cycle-count:disabled {
+    background: url('../assets/img/input_box.png') no-repeat center / cover, rgba(236,239,241,0.9);
+    color: #5f6368;
+    border-color: rgba(0,0,0,0.06);
+    cursor: not-allowed;
+}
+
+#cycle-count:focus {
+    outline: 2px solid #3b82f6;
+    outline-offset: 1px;
+    background: url('../assets/img/input_box.png') no-repeat center / cover, rgba(240,248,255,0.95);
+}
+
 /* Orden específico */
 #ciclos              { order: 0; }
 #temporizadorEstudio { order: 1; }
