@@ -14,6 +14,7 @@ body {
     background-position: center;
     background-repeat: no-repeat;
     background-blend-mode: overlay;
+    cursor: url('../assets/img/cursor_normal.png'), auto;
 }
 
 main {
@@ -21,8 +22,8 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2rem;
-    padding: 2rem;
+    gap: 14px;
+    padding: 14px;
 }
 
 /* ==================================================
@@ -47,12 +48,7 @@ main {
 }
 
 .grid-cell {
-    background: rgba(255,255,255,0);
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 10px;
-    padding: 10px;
-    box-sizing: border-box;
-    backdrop-filter: blur(2px);
+    padding: 15px;
 }
 
 /* Asignación de áreas */
@@ -87,145 +83,91 @@ main {
 ================================================== */
 #temporizadores {
     display: flex;
-    gap: 1rem;
     align-items: center;
-    justify-content: space-between;
-    width: 100vw;
-    margin-left: calc(50% - 50vw);
+    /* margin-left: calc(50% - 50vw);
     margin-right: calc(50% - 50vw);
-    margin-top: calc(50% - 50vw); /* revisar si realmente se desea este desplazamiento */
-    background: #005fa374;
-    color: #fff;
-    padding: 1rem;
-    box-sizing: border-box;
+    margin-top: calc(50% - 50vw);*/
+    
 }
 
 .temporizador {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    background: rgba(255,255,255,0.06);
-    padding: 0.6rem;
-    border-radius: 6px;
     min-width: 140px;
     box-sizing: border-box;
     flex: 1 1 0;
     min-width: 120px;
 }
 
-.qt-row {
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
+.temporizador-label,
+#ciclos-label,
+.qt-display{
+    font-family: monospace, sans-serif;
+    font-size: 25px;
+    font-weight: 600;
+    margin-bottom: 3px;
+    color: #1d4d85;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.815);
+    cursor: url('../assets/img/cursor_normal.png'), auto;
 }
 
-.qt-display {
-    font-family: monospace;
-    min-width: 72px;
-    max-width: 6.5rem;
-    text-align: center;
-    padding: 0.15rem 0.3rem;
-    border-radius: 4px;
-    box-sizing: border-box;
+#ciclos-label{
+    margin-bottom: 10px;
+}
+
+.qt-row {
+    display: flex;
+    gap: 7px;
+    align-items: center;
 }
 
 /* Inputs de los timers en el grid */
 .qt-min,
-.qt-sec {
-    background: url('../assets/img/input_box.png') no-repeat center / cover, rgba(255,255,255,0.9);
-    color: #000;
-    border: 1px solid rgba(0,0,0,0.12);
-    border-radius: 4px;
-    padding: 0.25rem 0.4rem;
-    width: 3.5rem;
-    box-sizing: border-box;
-    text-align: center;
-    font-family: monospace;
-    backdrop-filter: blur(5px);
-}
-
-.qt-min:disabled,
-.qt-sec:disabled {
-    background: url('../assets/img/input_box.png') no-repeat center / cover, rgba(236,239,241,0.9);
-    color: #5f6368;
-    border-color: rgba(0,0,0,0.06);
-    cursor: not-allowed;
-}
-
-.qt-min:focus,
-.qt-sec:focus {
-    outline: 2px solid #3b82f6;
-    outline-offset: 1px;
-    background: url('../assets/img/input_box.png') no-repeat center / cover, rgba(240,248,255,0.95);
-}
-
-/* Input de ciclos */
-#cycle-count {
-    background: url('../assets/img/input_box.png') no-repeat center / cover, rgba(255,255,255,0.9);
-    color: #000;
-    border: 1px solid rgba(0,0,0,0.12);
-    border-radius: 4px;
-    padding: 0.25rem 0.4rem;
-    width: 4rem;
-    box-sizing: border-box;
-    text-align: center;
-    font-family: monospace;
-    backdrop-filter: blur(5px);
-}
-
-#cycle-count:disabled {
-    background: url('../assets/img/input_box.png') no-repeat center / cover, rgba(236,239,241,0.9);
-    color: #5f6368;
-    border-color: rgba(0,0,0,0.06);
-    cursor: not-allowed;
-}
-
-#cycle-count:focus {
-    outline: 2px solid #3b82f6;
-    outline-offset: 1px;
-    background: url('../assets/img/input_box.png') no-repeat center / cover, rgba(240,248,255,0.95);
+.qt-sec,
+#cycle-count{
+    background: url('../assets/img/input_box.png') no-repeat center / 100% 100%, rgba(255,255,255,0.9);    border: 0px;
+    text-align: right;
+    cursor: url('../assets/img/cursor_input.png'), auto;
 }
 
 /* Orden específico */
 #ciclos              { order: 0; }
 #temporizadorEstudio { order: 1; }
 #temporizadorDescanso{ order: 2; }
-#controles {
+#temporizadorControles {
     order: 3;
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 0.5rem;
     justify-content: flex-end;
     flex-wrap: wrap;
-    flex: 0 0 auto; /* no crecer demasiado */
+    flex: 0 0 auto;
+}
+.controles {
+    font-family: monospace, sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    background: #ffffff8a;
+    color: #000;
+    border: 0px;
+    margin-left: 6px;
+    padding: 6px 12px;
+    border-radius: 8px;
+    cursor: url('../assets/img/cursor_mano.png'), auto;
+    box-sizing: border-box;
+}
+
+.controles:hover {
+    background-color: #82b8ff71;
 }
 
 /* Inputs */
 #temporizadores input[type="number"] {
     background: #fff;
     color: #000;
-    border: 1px solid rgba(0,0,0,0.12);
-    border-radius: 4px;
-    padding: 0.25rem 0.4rem;
-    width: 5rem;
-    max-width: 20%;
+    border: 0px;
     box-sizing: border-box;
-}
-
-#temporizadores input[type="number"]:disabled {
-    background: #eceff1;
-    color: #5f6368;
-    border-color: rgba(0,0,0,0.06);
-    cursor: not-allowed;
-    box-shadow: none;
-}
-
-#temporizadores input[type="number"]:disabled ~ .qt-display,
-#temporizadores .qt-display:empty {
-    background: #f4f6f8;
-    color: #333;
-    border-color: rgba(0,0,0,0.06);
 }
 
 /* ==================================================
@@ -249,10 +191,12 @@ main {
 }
 
 .player-track {
+    font-family: monospace, sans-serif;
+    color: #1d4d85;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.815);
     text-align: center;
     font-weight: 600;
     margin: 4px 0 8px;
-    font-size: .95rem;
     word-break: break-word;
 }
 
@@ -261,9 +205,15 @@ main {
     height: 8px;
     background: rgba(255,255,255,0.18);
     border-radius: 6px;
-    cursor: pointer;
+    cursor: url('../assets/img/cursor_mano.png'), auto;
     overflow: hidden;
     margin-bottom: 0.6rem;
+    user-select: none; /* Evitar selección de texto */
+    position: relative;
+}
+
+.progress:active {
+    cursor: url('../assets/img/cursor_mano.png'), grabbing;
 }
 
 .progress-bar {
@@ -271,11 +221,13 @@ main {
     width: 0%;
     background: linear-gradient(90deg,#fce7a4,#ff8282);
     border-radius: 6px 0 0 6px;
+    pointer-events: none; /* No interfiere con el arrastre */
+    transition: width 0.05s linear; /* Transición más rápida para arrastre */
 }
 
 .player-controls {
     display: flex;
-    gap: 0.5rem;
+    gap: 7px;
     justify-content: center;
     align-items: center;
 }
@@ -285,17 +237,12 @@ main {
     border: none;
     padding: 0.4rem 0.6rem;
     border-radius: 6px;
-    cursor: pointer;
+    cursor: url('../assets/img/cursor_mano.png'), auto;
     font-size: 1rem;
 }
 
 .player-controls button:hover {
     background-color: #ffe082;
-}
-
-.player-controls button:disabled {
-    opacity: .6;
-    cursor: not-allowed;
 }
 
 /* Botones con iconos */
@@ -335,20 +282,14 @@ main {
     border: none;
     border-radius: 20px;
     background: url('../assets/img/sudoku.png') no-repeat center / 100%;
-    cursor: pointer;
+    cursor: url('../assets/img/cursor_mano.png'), auto;
     box-shadow: 0 4px 14px rgba(0,0,0,0);
 }
 
 .icon-button#btn-sudoku:hover {
     box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+    background-size: 279px 91px;
 }
-
-.icon-button#btn-sudoku:focus-visible {
-    outline: 2px solid #3b82f6;
-    outline-offset: 3px;
-}
-
-.area-sudoku { padding: 0; }
 
 /* ==================================================
    MEDIA QUERIES

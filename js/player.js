@@ -19,6 +19,7 @@
         let playlist = [];
         let currentIndex = 0;
         let isLoaded = false;
+        let isDragging = false; // Variable para controlar el arrastre
 
         function setButtonsEnabled(enabled) {
             [playBtn, pauseBtn, rewBtn, fwdBtn].forEach(b => b.disabled = !enabled);
@@ -135,11 +136,23 @@
             playerTrack.textContent = title;
         }
 
+        // Función para actualizar posición según click/arrastre
+        function seekToPosition(e) {
+            if (!audio.duration || !isFinite(audio.duration)) return;
+            const rect = progress.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const pct = Math.max(0, Math.min(1, x / rect.width));
+            audio.currentTime = pct * audio.duration;
+            updateProgress();
+        }
+
+        // Event listeners botones
         playBtn.addEventListener('click', () => playCurrent());
         pauseBtn.addEventListener('click', () => pauseCurrent());
         rewBtn.addEventListener('click', () => prevTrack());
         fwdBtn.addEventListener('click', () => nextTrack());
 
+        // Event listeners del audio
         audio.addEventListener('timeupdate', updateProgress);
         audio.addEventListener('loadedmetadata', () => {
             updateProgress();
@@ -147,20 +160,43 @@
         });
         audio.addEventListener('loadstart', updateTrackName);
         audio.addEventListener('ended', () => nextTrack(true));
-        // si el src falla (404 u otro error), avanzar a la siguiente pista
         audio.addEventListener('error', (e) => {
             console.warn('player: error cargando pista, pasando a la siguiente.', e);
-            // intentar siguiente pista para evitar quedarse bloqueado
             nextTrack(true);
         });
 
-        progress.addEventListener('click', (e) => {
-            if (!audio.duration || !isFinite(audio.duration)) return;
-            const rect = progress.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const pct = Math.max(0, Math.min(1, x / rect.width));
-            audio.currentTime = pct * audio.duration;
-            updateProgress();
+        // Event listeners para barra de progreso - ARRASTRE
+        progress.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            seekToPosition(e);
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (isDragging) {
+                seekToPosition(e);
+            }
+        });
+
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+        });
+
+        // Soporte para dispositivos táctiles
+        progress.addEventListener('touchstart', (e) => {
+            isDragging = true;
+            const touch = e.touches[0];
+            seekToPosition(touch);
+        });
+
+        document.addEventListener('touchmove', (e) => {
+            if (isDragging && e.touches.length > 0) {
+                const touch = e.touches[0];
+                seekToPosition(touch);
+            }
+        });
+
+        document.addEventListener('touchend', () => {
+            isDragging = false;
         });
 
         // Cargar playlist al inicio (no bloqueante)
