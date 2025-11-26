@@ -31,7 +31,6 @@
                         <div class="text">min</div>
                         <input type="number" id="qt1-sec" class="qt-sec" min="0" max="60" value="0" />
                         <div class="text">seg</div>
-                        <div class="qt-display" id="qt1-display">00:00</div>
                     </div>
                 </div>
             </div>
@@ -43,7 +42,6 @@
                         <div class="text">min</div>
                         <input type="number" id="qt2-sec" class="qt-sec" min="0" max="60" value="0" />
                         <div class="text">seg</div>
-                        <div class="qt-display" id="qt2-display">00:00</div>
                     </div>
                 </div>
             </div>
@@ -59,8 +57,12 @@
             <div class="grid-cell r1c0 area-sudoku" data-pos="0,1">
                 <button id="btn-sudoku" class="icon-button" title="Sudoku" aria-label="Abrir Sudoku"></button>
             </div>
-            <div class="grid-cell r1c1" data-pos="1,1"></div>
-            <div class="grid-cell r1c2" data-pos="2,1"></div>
+            <div class="grid-cell r1c1 area-display1" data-pos="1,1">
+                <div class="qt-display" id="qt1-display">00:00</div>
+            </div>
+            <div class="grid-cell r1c2 area-display2" data-pos="2,1">
+                <div class="qt-display" id="qt2-display">00:00</div>
+            </div>
             <div class="grid-cell r1c3 area-player" data-pos="3,1">
                 <div id="player" class="player-wrapper">
                     <div class="player-inner">

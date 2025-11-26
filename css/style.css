@@ -41,7 +41,7 @@ main {
     box-sizing: border-box;
     grid-template-areas:
         "cycles   t1       t2       controls"
-        "sudoku   .        .        player"
+        "sudoku   display1 display2 player"
         ".        .        .        ."
         ".        .        .        .";
     grid-auto-flow: dense;
@@ -58,6 +58,8 @@ main {
 .area-controls { grid-area: controls; }
 .area-sudoku   { grid-area: sudoku; }
 .area-player   { grid-area: player; }
+.area-display1 { grid-area: display1; }
+.area-display2 { grid-area: display2; }
 
 /* Centrado de contenido en celdas clave */
 .area-sudoku,
@@ -65,7 +67,9 @@ main {
 .area-controls,
 .area-cycles,
 .area-t1,
-.area-t2 {
+.area-t2,
+.area-display1,
+.area-display2 {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -174,6 +178,16 @@ main {
     color: #000;
     border: 0px;
     box-sizing: border-box;
+}
+
+.qt-display {
+    font-size: 64px;
+}
+
+.r1c1, .r1c2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* ==================================================
@@ -307,8 +321,8 @@ main {
         grid-template-columns: repeat(3, minmax(180px, 1fr));
         grid-template-areas:
             "cycles   t1       t2"
-            "controls sudoku   player"
-            ".        .        ."
+            "controls display1   display2"
+            "player sudoku ."
             ".        .        .";
     }
 }
@@ -320,11 +334,14 @@ main {
         grid-template-areas:
             "cycles"
             "t1"
+            "display1"
             "t2"
+            "display2"
             "controls"
-            "sudoku"
-            "player";
+            "player"
+            "sudoku";
     }
     .grid-cell { min-height: 120px; }
     .player-inner { max-width: 100%; }
 }
+
