@@ -54,8 +54,18 @@
             </div>
 
             <!-- Fila 1 -->
-            <div class="grid-cell r1c0 area-sudoku" data-pos="0,1">
-                <button id="btn-sudoku" class="icon-button" title="Sudoku" aria-label="Abrir Sudoku"></button>
+
+            <div class="grid-cell r1c0 area-sudoku-board" data-pos="0,2">
+                <div id="sudoku-container">
+                    <h3>Sudoku</h3>
+                    <div id="sudoku-board"></div>
+                    <div class="sudoku-controls">
+                        <button id="generate-sudoku">Generar Puzzle</button>
+                        <button id="check-sudoku">Comprobar Solución</button>
+                        <button id="clear-user-inputs">Borrar Entradas</button>
+                    </div>
+                    <div id="sudoku-message"></div>
+                </div>
             </div>
             <div class="grid-cell r1c1 area-display1" data-pos="1,1">
                 <div class="qt-display" id="qt1-display">00:00</div>
@@ -101,5 +111,6 @@
     <!-- Scripts JS -->
     <script src="js/pomodoro.js"></script>
     <script src="js/player.js"></script>
+    <script src="js/sudoku.js"></script>
  </body>
  </html>

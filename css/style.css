@@ -41,8 +41,8 @@ main {
     box-sizing: border-box;
     grid-template-areas:
         "cycles   t1       t2       controls"
-        "sudoku   display1 display2 player"
-        ".        .        .        ."
+        "sudoku-board   display1 display2 player"
+        ". . . ."
         ".        .        .        .";
     grid-auto-flow: dense;
 }
@@ -60,6 +60,7 @@ main {
 .area-player   { grid-area: player; }
 .area-display1 { grid-area: display1; }
 .area-display2 { grid-area: display2; }
+.area-sudoku-board { grid-area: sudoku-board; }
 
 /* Centrado de contenido en celdas clave */
 .area-sudoku,
@@ -69,16 +70,24 @@ main {
 .area-t1,
 .area-t2,
 .area-display1,
-.area-display2 {
+.area-display2,
+.area-sudoku-board {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-/* Centrar botón Sudoku dentro de su celda */
-#layout-grid .r1c0 {
-    display: flex;
+/* Centrar el contenido de ciclos, trabajo y descanso */
+#ciclos,
+#temporizadorEstudio,
+#temporizadorDescanso {
     align-items: center;
+}
+
+/* Alineación específica para celdas de fila 1 */
+.r1c1, .r1c2, .r1c3 {
+    display: flex;
+    align-items: flex-start;
     justify-content: center;
 }
 
@@ -88,10 +97,6 @@ main {
 #temporizadores {
     display: flex;
     align-items: center;
-    /* margin-left: calc(50% - 50vw);
-    margin-right: calc(50% - 50vw);
-    margin-top: calc(50% - 50vw);*/
-    
 }
 
 .temporizador {
@@ -107,7 +112,7 @@ main {
 .temporizador-label,
 #ciclos-label,
 .qt-display,
-.text{
+.text {
     font-family: monospace, sans-serif;
     font-size: 22px;
     font-weight: 600;
@@ -117,12 +122,12 @@ main {
     cursor: url('../assets/img/cursor_normal.png'), auto;
 }
 
-.text{
+.text {
     font-size: 16px;
     margin-bottom: 0;
 }
 
-#ciclos-label{
+#ciclos-label {
     margin-bottom: 10px;
 }
 
@@ -132,19 +137,29 @@ main {
     align-items: center;
 }
 
+.qt-display {
+    font-size: 64px;
+}
+
 /* Inputs de los timers en el grid */
 .qt-min,
 .qt-sec,
-#cycle-count{
-    background: url('../assets/img/input_box.png') no-repeat center / 100% 100%, rgba(255,255,255,0.9);    border: 0px;
+#cycle-count {
+    background: url('../assets/img/input_box.png') no-repeat center / 100% 100%;
+    border: 0px;
     text-align: right;
     cursor: url('../assets/img/cursor_input.png'), auto;
 }
 
-/* Orden específico */
-#ciclos              { order: 0; }
-#temporizadorEstudio { order: 1; }
-#temporizadorDescanso{ order: 2; }
+/* Inputs generales */
+#temporizadores input[type="number"] {
+    background: #fff;
+    color: #000;
+    border: 0px;
+    box-sizing: border-box;
+}
+
+/* Controles */
 #temporizadorControles {
     order: 3;
     display: flex;
@@ -154,6 +169,7 @@ main {
     flex-wrap: wrap;
     flex: 0 0 auto;
 }
+
 .controles {
     font-family: monospace, sans-serif;
     font-size: 18px;
@@ -172,23 +188,10 @@ main {
     background-color: #82b8ff71;
 }
 
-/* Inputs */
-#temporizadores input[type="number"] {
-    background: #fff;
-    color: #000;
-    border: 0px;
-    box-sizing: border-box;
-}
-
-.qt-display {
-    font-size: 64px;
-}
-
-.r1c1, .r1c2 {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+/* Orden específico */
+#ciclos              { order: 0; }
+#temporizadorEstudio { order: 1; }
+#temporizadorDescanso{ order: 2; }
 
 /* ==================================================
    REPRODUCTOR
@@ -228,7 +231,7 @@ main {
     cursor: url('../assets/img/cursor_mano.png'), auto;
     overflow: hidden;
     margin-bottom: 0.6rem;
-    user-select: none; /* Evitar selección de texto */
+    user-select: none;
     position: relative;
 }
 
@@ -241,8 +244,8 @@ main {
     width: 0%;
     background: linear-gradient(90deg,#fce7a4,#ff8282);
     border-radius: 6px 0 0 6px;
-    pointer-events: none; /* No interfiere con el arrastre */
-    transition: width 0.05s linear; /* Transición más rápida para arrastre */
+    pointer-events: none;
+    transition: width 0.05s linear;
 }
 
 .player-controls {
@@ -285,12 +288,104 @@ main {
 .player-btn-pause { background-image: url('../assets/img/stop_button.png'); }
 .player-btn-fwd   { background-image: url('../assets/img/skip_button.png'); }
 
-/* Fila combinada opcional (si se usa) */
+/* Fila combinada opcional */
 .player-row {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 12px;
+}
+
+/* ==================================================
+   SUDOKU
+================================================== */
+#sudoku-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    max-width: 300px;
+}
+
+#sudoku-container h3 {
+    font-family: monospace, sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 3px;
+    color: #1d4d85;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.815);
+    cursor: url('../assets/img/cursor_normal.png'), auto;
+}
+
+#sudoku-board {
+    display: grid;
+    grid-template-columns: repeat(9, 30px);
+    grid-template-rows: repeat(9, 30px);
+    gap: 1px;
+    border: 2px solid #1d4d85;
+    background: #1d4d85;
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.sudoku-cell {
+    background: url('../assets/img/input_box.png') no-repeat center / 100% 100%, rgba(255,255,255,0.9);
+    border: 1px solid #cae3ff;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: monospace, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1d4d85;
+    text-align: center;
+    cursor: url('../assets/img/cursor_input.png'), auto;
+}
+
+.sudoku-cell:nth-child(3n+3):not(:nth-child(9n+9)) {
+    border-right: 5px solid #00067d;
+}
+
+.sudoku-cell:nth-child(n+19):nth-child(-n+27),
+.sudoku-cell:nth-child(n+46):nth-child(-n+54),
+.sudoku-cell:nth-child(n+73):nth-child(-n+81) {
+    border-bottom: 5px solid #00067d;
+}
+
+.sudoku-controls {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.sudoku-controls button {
+    font-family: monospace, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    background: #ffffff8a;
+    color: #000;
+    border: 0px;
+    padding: 6px 12px;
+    border-radius: 8px;
+    cursor: url('../assets/img/cursor_mano.png'), auto;
+}
+
+.sudoku-controls button:hover {
+    background-color: #82b8ff71;
+}
+
+#sudoku-message {
+    font-family: monospace, sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: #1d4d85;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.815);
+    text-align: center;
+    min-height: 20px;
 }
 
 /* ==================================================
@@ -322,7 +417,7 @@ main {
         grid-template-areas:
             "cycles   t1       t2"
             "controls display1   display2"
-            "player sudoku ."
+            "player sudoku-board ."
             ".        .        .";
     }
 }
@@ -339,7 +434,7 @@ main {
             "display2"
             "controls"
             "player"
-            "sudoku";
+            "sudoku-board";
     }
     .grid-cell { min-height: 120px; }
     .player-inner { max-width: 100%; }
