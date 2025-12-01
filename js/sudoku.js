@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Update the UI
         updateBoard();
-        messageElement.textContent = 'Puzzle generated! Fill the empty cells.';
+        messageElement.textContent = '¡Buena suerte!';
     }
 
     // Helper to fill the board with a valid Sudoku
@@ -116,15 +116,15 @@ document.addEventListener('DOMContentLoaded', () => {
             const col = i % 9;
             const val = parseInt(cells[i].value) || 0;
             if (val < 1 || val > 9) {
-                messageElement.textContent = 'Invalid input! Only 1-9 allowed.';
+                messageElement.textContent = 'Solo nums del 1 al 9.';
                 return;
             }
             board[row][col] = val;
         }
         if (isValidSudoku(board)) {
-            messageElement.textContent = 'Congratulations! Sudoku solved correctly.';
+            messageElement.textContent = '¡Correcto!';
         } else {
-            messageElement.textContent = 'Incorrect solution. Try again.';
+            messageElement.textContent = 'Solución incorrecta.';
         }
     }
 
