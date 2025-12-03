@@ -117,7 +117,7 @@ main {
     font-size: 22px;
     font-weight: 600;
     margin-bottom: 3px;
-    color: #1d4d85;
+    color: #85411d;
     text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.815);
     cursor: url('../assets/img/cursor_normal.png'), auto;
 }
@@ -199,7 +199,8 @@ main {
 #player {
     width: 100%;
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
+    align-items: center;
     margin-top: 0.75rem;
     box-sizing: border-box;
 }
@@ -215,7 +216,7 @@ main {
 
 .player-track {
     font-family: monospace, sans-serif;
-    color: #1d4d85;
+    color: #85411d;
     text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.815);
     text-align: center;
     font-weight: 600;
@@ -323,7 +324,7 @@ main {
     grid-template-columns: repeat(9, var(--sudoku-cell));
     grid-template-rows: repeat(9, var(--sudoku-cell));
     gap: var(--sudoku-gap);
-    border: var(--sudoku-border) solid #1d4d85;
+    border: var(--sudoku-border) solid #85411d;
     width: calc(9 * var(--sudoku-cell) + 8 * var(--sudoku-gap) + 2 * var(--sudoku-border));
     margin: 0 auto;
 }
@@ -362,7 +363,7 @@ main {
 }
 
 .sudoku-controls button:hover {
-    background-color: #82b8ff71;
+    background-color: #ffdf89;
 }
 
 .sudoku-controls #check-sudoku {
@@ -374,7 +375,7 @@ main {
     font-family: monospace, sans-serif;
     font-size: 22px;
     font-weight: 600;
-    color: #1d4d85;
+    color: #85411d;
     text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.815);
     text-align: center;
     min-height: 20px;
@@ -396,6 +397,52 @@ main {
 .icon-button#btn-sudoku:hover {
     box-shadow: 0 6px 18px rgba(0,0,0,0.3);
     background-size: 279px 91px;
+}
+
+/* ==================================================
+   ESTILO ESPECIAL PARA BOTONES POMODORO (Empezar, Pausar, Resetear)
+================================================== */
+#qt1-start,
+#qt1-pause,
+#qt1-reset {
+  /* Variables */
+  --button_radius: 0.75em;
+  --button_color: #ffcb8f;
+  --button_outline_color: #752500;
+  font-size: 17px;
+  font-weight: bold;
+  border: none;
+  cursor: url('../assets/img/cursor_mano.png'), auto;
+  border-radius: var(--button_radius);
+  background: var(--button_outline_color);
+  margin-left: 6px;
+  padding: 0;
+}
+
+#qt1-start .button_top,
+#qt1-pause .button_top,
+#qt1-reset .button_top {
+  display: block;
+  box-sizing: border-box;
+  border: 2px solid var(--button_outline_color);
+  border-radius: var(--button_radius);
+  padding: 0.75em 1.5em;
+  background: var(--button_color);
+  color: var(--button_outline_color);
+  transform: translateY(-0.2em);
+  transition: transform 0.1s ease;
+}
+
+#qt1-start:hover .button_top,
+#qt1-pause:hover .button_top,
+#qt1-reset:hover .button_top {
+  transform: translateY(-0.33em);
+}
+
+#qt1-start:active .button_top,
+#qt1-pause:active .button_top,
+#qt1-reset:active .button_top {
+  transform: translateY(0);
 }
 
 /* ==================================================
