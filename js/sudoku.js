@@ -182,7 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 userInputs[row][col] = false;
             }
         }
-        messageElement.textContent = 'User inputs cleared.';
+        messageElement.textContent = 'Inputs borrados.';
     }
 
     // Escucha eventos globales del pomodoro
