@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const boardElement = document.getElementById('sudoku-board');
+    const container = document.getElementById('sudoku-container'); // << añade el contenedor en index.html
     const generateBtn = document.getElementById('generate-sudoku');
     const checkBtn = document.getElementById('check-sudoku');
     const clearBtn = document.getElementById('clear-user-inputs');
@@ -102,9 +103,28 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let i = 0; i < 81; i++) {
             const row = Math.floor(i / 9);
             const col = i % 9;
-            cells[i].value = originalBoard[row][col] || '';
-            cells[i].disabled = originalBoard[row][col] !== 0;
+            const val = originalBoard[row][col] || '';
+            const isFixed = originalBoard[row][col] !== 0;
+            cells[i].value = val;
+            cells[i].disabled = isFixed || container.classList.contains('locked');
+            cells[i].dataset.fixed = isFixed ? '1' : '0';
         }
+    }
+
+    function setSudokuLocked(locked) {
+        if (!container) return;
+        container.classList.toggle('locked', locked);
+        // Deshabilita inputs solo si está bloqueado
+        const cells = boardElement.querySelectorAll('.sudoku-cell');
+        cells.forEach((cell) => {
+            // Mantén deshabilitadas las celdas fijas del puzzle
+            const isFixed = cell.dataset.fixed === '1';
+            cell.disabled = locked || isFixed;
+        });
+        // Botones
+        [generateBtn, checkBtn, clearBtn].forEach(btn => {
+            if (btn) btn.disabled = locked;
+        });
     }
 
     // Check if the current board is solved correctly
@@ -164,6 +184,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         messageElement.textContent = 'User inputs cleared.';
     }
+
+    // Escucha eventos globales del pomodoro
+    document.addEventListener('work:start', () => setSudokuLocked(true));
+    document.addEventListener('work:stop', () => setSudokuLocked(false));
+    document.addEventListener('rest:start', () => setSudokuLocked(false));
+    document.addEventListener('rest:stop', () => setSudokuLocked(true));
+
+    // Expone un pequeño API por si prefieres llamarlo directo
+    window.SudokuLocker = {
+        lock: () => setSudokuLocked(true),
+        unlock: () => setSudokuLocked(false)
+    };
 
     // Event listeners
     generateBtn.addEventListener('click', generateSudoku);
