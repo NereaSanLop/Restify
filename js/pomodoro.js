@@ -73,8 +73,6 @@
         if (currentPhase === 1) emit('work:start');   // bloquea Sudoku
         else if (currentPhase === 2) emit('rest:start'); // desbloquea Sudoku
         else if (currentPhase === 0) {
-            // parado: por defecto bloquea (lo decide sudoku.js con rest:stop/work:stop)
-            // no emitimos aquí para no duplicar; endSequence emite stop apropiado.
         }
     }
 
@@ -165,7 +163,6 @@
         if (currentPhase === 1) {
             emit('work:stop');   // bloquea Sudoku
         }
-        // Nota: no emitir rest:stop aquí para mantener Sudoku desbloqueado durante pausa en descanso
     }
 
     function resetSequence() {

@@ -141,22 +141,50 @@ main {
     font-size: 64px;
 }
 
-/* Inputs de los timers en el grid */
+/* ==================================================
+   INPUTS CON ETIQUETA FLOTANTE (Uiverse - Maximinodotpy)
+================================================== */
+
+/* Contenedor para inputs de timer */
 .qt-min,
 .qt-sec,
 #cycle-count {
-    background: url('../assets/img/input_box.png') no-repeat center / 100% 100%;
-    border: 0px;
-    text-align: right;
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 100%;
+    padding: 0.8em;
+    outline: none;
+    border: 2px solid rgb(200, 200, 200);
+    background-color: transparent !important;
+    border-radius: 20px;
+    width: 100%;
+    box-sizing: border-box;
+    color: #000;
     cursor: url('../assets/img/cursor_input.png'), auto;
+    position: relative;
+    text-align: right;
 }
 
-/* Inputs generales */
-#temporizadores input[type="number"] {
-    background: #fff;
-    color: #000;
-    border: 0px;
-    box-sizing: border-box;
+/* Input específico de cycles más estrecho */
+#cycle-count {
+    max-width: 100px;
+}
+
+/* Estilos para inputs deshabilitados */
+.qt-min:disabled,
+.qt-sec:disabled,
+#cycle-count:disabled {
+    background: #d7d7d7 !important;
+    color: #5f5f5f !important;
+    cursor: not-allowed !important;
+    filter: grayscale(20%);
+}
+
+/* Elimina estilos anteriores conflictivos */
+.qt-min,
+.qt-sec,
+#cycle-count {
+    background: transparent !important;
+    border: 2px solid rgb(200, 200, 200);
 }
 
 /* Controles */
