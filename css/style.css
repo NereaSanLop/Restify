@@ -1,5 +1,5 @@
 /* ==================================================
-   BASE
+   BASE Y ESTILOS GENERALES
 ================================================== */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -152,16 +152,67 @@ main {
     font-size: 64px;
 }
 
+/* Orden específico */
+#ciclos              { order: 0; }
+#temporizadorEstudio { order: 1; }
+#temporizadorDescanso{ order: 2; }
+
 /* ==================================================
    INPUTS CON ETIQUETA FLOTANTE (Uiverse - Maximinodotpy)
 ================================================== */
+
+.inputGroup {
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0.5em 0 0.5em 0;
+    max-width: 190px;
+    position: relative;
+}
+
+.inputGroup input {
+    font-family: monospace, sans-serif;
+    color: #752500;
+    font-size: 100%;
+    padding: 0.8em;
+    outline: none;
+    border: 2px solid rgb(200, 200, 200);
+    background-color: transparent !important;
+    border-radius: 20px;
+    width: 100%;
+    box-sizing: border-box;
+    cursor: url('../assets/img/cursor_input.png'), auto;
+    position: relative;
+    text-align: center;
+}
+
+.inputGroup label {
+    font-size: 100%;
+    position: absolute;
+    left: 0;
+    padding: 0.8em;
+    margin-left: 0.5em;
+    pointer-events: none;
+    transition: all 0.3s ease;
+    color: rgb(100, 100, 100);
+}
+
+.inputGroup :is(input:focus, input:valid) ~ label {
+    transform: translateY(-50%) scale(.9);
+    margin: 0em;
+    margin-left: 1.3em;
+    padding: 0.4em;
+    background-color: #e8e8e8;
+}
+
+.inputGroup :is(input:focus, input:valid) {
+    border-color: rgb(150, 150, 200);
+}
 
 /* Contenedor para inputs de timer */
 .qt-min,
 .qt-sec,
 #cycle-count {
     font-family: monospace, sans-serif;
-    color:#752500;
+    color: #752500;
     font-size: 100%;
     padding: 0.8em;
     outline: none;
@@ -190,15 +241,30 @@ main {
     filter: grayscale(20%);
 }
 
-/* Elimina estilos anteriores conflictivos */
-.qt-min,
-.qt-sec,
-#cycle-count {
-    background: transparent !important;
-    border: 2px solid rgb(200, 200, 200);
+/* Inputs deshabilitados: mucho más grises y con cursor bloqueado */
+#temporizadores input[type="number"]:disabled,
+.qt-min:disabled,
+.qt-sec:disabled,
+#cycle-count:disabled {
+    background: #d7d7d7 !important;
+    color: #5f5f5f !important;
+    cursor: not-allowed !important;
+    filter: grayscale(20%);
 }
 
-/* Controles */
+/* Cursor normal en las flechitas (spinner) de los inputs number */
+.qt-min::-webkit-outer-spin-button,
+.qt-min::-webkit-inner-spin-button,
+.qt-sec::-webkit-outer-spin-button,
+.qt-sec::-webkit-inner-spin-button,
+#cycle-count::-webkit-outer-spin-button,
+#cycle-count::-webkit-inner-spin-button {
+    cursor: url('../assets/img/cursor_normal.png'), auto;
+}
+
+/* ==================================================
+   CONTROLES Y BOTONES GENERALES
+================================================== */
 #temporizadorControles {
     order: 3;
     display: flex;
@@ -227,10 +293,50 @@ main {
     background-color: #82b8ff71;
 }
 
-/* Orden específico */
-#ciclos              { order: 0; }
-#temporizadorEstudio { order: 1; }
-#temporizadorDescanso{ order: 2; }
+/* ==================================================
+   BOTONES POMODORO (Empezar, Pausar, Resetear)
+================================================== */
+#qt1-start,
+#qt1-pause,
+#qt1-reset {
+    --button_radius: 0.75em;
+    --button_color: #ffcb8f;
+    --button_outline_color: #752500;
+    font-size: 17px;
+    font-weight: bold;
+    border: none;
+    cursor: url('../assets/img/cursor_mano.png'), auto;
+    border-radius: var(--button_radius);
+    background: var(--button_outline_color);
+    margin-left: 6px;
+    padding: 0;
+}
+
+#qt1-start .button_top,
+#qt1-pause .button_top,
+#qt1-reset .button_top {
+    display: block;
+    box-sizing: border-box;
+    border: 2px solid var(--button_outline_color);
+    border-radius: var(--button_radius);
+    padding: 0.75em 1.5em;
+    background: var(--button_color);
+    color: var(--button_outline_color);
+    transform: translateY(-0.2em);
+    transition: transform 0.1s ease;
+}
+
+#qt1-start:hover .button_top,
+#qt1-pause:hover .button_top,
+#qt1-reset:hover .button_top {
+    transform: translateY(-0.33em);
+}
+
+#qt1-start:active .button_top,
+#qt1-pause:active .button_top,
+#qt1-reset:active .button_top {
+    transform: translateY(0);
+}
 
 /* ==================================================
    REPRODUCTOR
@@ -247,7 +353,6 @@ main {
 .player-inner {
     width: 100%;
     max-width: 360px;
-    background: rgba(255,255,255,0.08);
     padding: 0.75rem;
     border-radius: 12px;
     box-sizing: border-box;
@@ -361,13 +466,6 @@ main {
     cursor: url('../assets/img/cursor_normal.png'), auto;
 }
 
-/* ==================================================
-   SUDOKU (ajuste de anchos y botones en una fila)
-================================================== */
-
-/* Variables para mantener tamaños coherentes */
-
-/* El tablero ocupa un ancho exacto calculado */
 #sudoku-board {
     display: grid;
     grid-template-columns: repeat(9, var(--sudoku-cell));
@@ -378,20 +476,35 @@ main {
     margin: 0 auto;
 }
 
-/* La barra de controles ocupa exactamente el mismo ancho que el tablero */
+/* Cursor personalizado para inputs del Sudoku */
+#sudoku-board .sudoku-cell {
+    cursor: url('../assets/img/cursor_input.png'), auto;
+}
+
+/* Sudoku: celdas deshabilitadas más evidentes */
+#sudoku-board .sudoku-cell:disabled {
+    background: #dcdcdc !important;
+    color: #5e5e5e !important;
+    cursor: not-allowed !important;
+}
+
+#sudoku-board .sudoku-cell::-webkit-outer-spin-button,
+#sudoku-board .sudoku-cell::-webkit-inner-spin-button {
+    cursor: url('../assets/img/cursor_normal.png'), auto;
+}
+
 .sudoku-controls {
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: stretch;
     gap: 8px;
-    flex-wrap: nowrap; /* siempre en paralelo */
+    flex-wrap: nowrap;
     width: calc(9 * var(--sudoku-cell) + 8 * var(--sudoku-gap) + 2 * var(--sudoku-border));
     margin: 0 auto;
-    overflow: visible; /* sin scroll, el texto envuelve dentro del botón */
+    overflow: visible;
 }
 
-/* Botones: se reparten el ancho y el texto puede partirse en varias líneas */
 .sudoku-controls button {
     font-family: monospace, sans-serif;
     font-size: 13px;
@@ -450,9 +563,6 @@ main {
     min-height: 20px;
 }
 
-/* ==================================================
-   BOTÓN SUDOKU
-================================================== */
 .icon-button#btn-sudoku {
     width: 274px;
     height: 87px;
@@ -468,50 +578,14 @@ main {
     background-size: 279px 91px;
 }
 
-/* ==================================================
-   ESTILO ESPECIAL PARA BOTONES POMODORO (Empezar, Pausar, Resetear)
-================================================== */
-#qt1-start,
-#qt1-pause,
-#qt1-reset {
-  /* Variables */
-  --button_radius: 0.75em;
-  --button_color: #ffcb8f;
-  --button_outline_color: #752500;
-  font-size: 17px;
-  font-weight: bold;
-  border: none;
-  cursor: url('../assets/img/cursor_mano.png'), auto;
-  border-radius: var(--button_radius);
-  background: var(--button_outline_color);
-  margin-left: 6px;
-  padding: 0;
+/* Estado bloqueado del Sudoku */
+#sudoku-container.locked {
+    opacity: 0.5;
 }
 
-#qt1-start .button_top,
-#qt1-pause .button_top,
-#qt1-reset .button_top {
-  display: block;
-  box-sizing: border-box;
-  border: 2px solid var(--button_outline_color);
-  border-radius: var(--button_radius);
-  padding: 0.75em 1.5em;
-  background: var(--button_color);
-  color: var(--button_outline_color);
-  transform: translateY(-0.2em);
-  transition: transform 0.1s ease;
-}
-
-#qt1-start:hover .button_top,
-#qt1-pause:hover .button_top,
-#qt1-reset:hover .button_top {
-  transform: translateY(-0.33em);
-}
-
-#qt1-start:active .button_top,
-#qt1-pause:active .button_top,
-#qt1-reset:active .button_top {
-  transform: translateY(0);
+#sudoku-container.locked .sudoku-controls button {
+    pointer-events: none;
+    filter: grayscale(60%);
 }
 
 /* ==================================================
@@ -553,52 +627,4 @@ main {
         flex-wrap: nowrap;
         overflow-x: visible;
     }
-}
-
-/* Estado bloqueado del Sudoku */
-#sudoku-container.locked {
-    opacity: 0.5;
-}
-
-#sudoku-container.locked .sudoku-controls button {
-    pointer-events: none;
-    filter: grayscale(60%);
-}
-
-/* Inputs deshabilitados: mucho más grises y con cursor bloqueado */
-#temporizadores input[type="number"]:disabled,
-.qt-min:disabled,
-.qt-sec:disabled,
-#cycle-count:disabled {
-    background: #d7d7d7 !important;
-    color: #5f5f5f !important;
-    cursor: not-allowed !important;
-    filter: grayscale(20%);
-}
-
-/* Sudoku: celdas deshabilitadas más evidentes */
-#sudoku-board .sudoku-cell:disabled {
-    background: #dcdcdc !important;
-    color: #5e5e5e !important;
-    cursor: not-allowed !important;
-}
-
-/* Cursor personalizado para inputs del Sudoku */
-#sudoku-board .sudoku-cell {
-    cursor: url('../assets/img/cursor_input.png'), auto;
-}
-
-/* Cursor normal en las flechitas (spinner) de los inputs number */
-.qt-min::-webkit-outer-spin-button,
-.qt-min::-webkit-inner-spin-button,
-.qt-sec::-webkit-outer-spin-button,
-.qt-sec::-webkit-inner-spin-button,
-#cycle-count::-webkit-outer-spin-button,
-#cycle-count::-webkit-inner-spin-button {
-    cursor: url('../assets/img/cursor_normal.png'), auto;
-}
-
-#sudoku-board .sudoku-cell::-webkit-outer-spin-button,
-#sudoku-board .sudoku-cell::-webkit-inner-spin-button {
-    cursor: url('../assets/img/cursor_normal.png'), auto;
 }

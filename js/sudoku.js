@@ -1,13 +1,14 @@
 document.addEventListener('DOMContentLoaded', () => {
     const boardElement = document.getElementById('sudoku-board');
-    const container = document.getElementById('sudoku-container'); // << añade el contenedor en index.html
+    const container = document.getElementById('sudoku-container');
     const generateBtn = document.getElementById('generate-sudoku');
     const checkBtn = document.getElementById('check-sudoku');
     const clearBtn = document.getElementById('clear-user-inputs');
     const messageElement = document.getElementById('sudoku-message');
 
-    let originalBoard = Array(9).fill().map(() => Array(9).fill(0)); // Store the generated puzzle
-    let userInputs = Array(9).fill().map(() => Array(9).fill(false)); // Track user-entered cells
+    let originalBoard = Array(9).fill().map(() => Array(9).fill(0));
+    let userInputs = Array(9).fill().map(() => Array(9).fill(false));
+    let sudokuLocked = false; // Track actual lock state
 
     // Initialize empty board
     function createBoard() {
@@ -28,14 +29,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Generate a valid Sudoku puzzle
     function generateSudoku() {
-        // Reset boards
         originalBoard = Array(9).fill().map(() => Array(9).fill(0));
         userInputs = Array(9).fill().map(() => Array(9).fill(false));
 
-        // Fill the board with a valid solution
         fillBoard(originalBoard);
 
-        // Remove some cells to create a puzzle (e.g., remove 40 cells)
         const cells = [];
         for (let i = 0; i < 9; i++) {
             for (let j = 0; j < 9; j++) {
@@ -48,7 +46,6 @@ document.addEventListener('DOMContentLoaded', () => {
             originalBoard[row][col] = 0;
         }
 
-        // Update the UI
         updateBoard();
         messageElement.textContent = '¡Buena suerte!';
     }
@@ -106,21 +103,26 @@ document.addEventListener('DOMContentLoaded', () => {
             const val = originalBoard[row][col] || '';
             const isFixed = originalBoard[row][col] !== 0;
             cells[i].value = val;
-            cells[i].disabled = isFixed || container.classList.contains('locked');
             cells[i].dataset.fixed = isFixed ? '1' : '0';
+            // Solo deshabilita si está locked Y no es una celda fija
+            cells[i].disabled = isFixed || sudokuLocked;
         }
     }
 
+    // Actualiza el estado de lock del Sudoku
     function setSudokuLocked(locked) {
+        sudokuLocked = locked;
+        
         if (!container) return;
         container.classList.toggle('locked', locked);
-        // Deshabilita inputs solo si está bloqueado
+        
+        // Actualiza celdas del tablero
         const cells = boardElement.querySelectorAll('.sudoku-cell');
         cells.forEach((cell) => {
-            // Mantén deshabilitadas las celdas fijas del puzzle
             const isFixed = cell.dataset.fixed === '1';
             cell.disabled = locked || isFixed;
         });
+        
         // Botones
         [generateBtn, checkBtn, clearBtn].forEach(btn => {
             if (btn) btn.disabled = locked;
@@ -186,10 +188,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Escucha eventos globales del pomodoro
+    // TRABAJO (temporizador 1): DISABLED
     document.addEventListener('work:start', () => setSudokuLocked(true));
-    document.addEventListener('work:stop', () => setSudokuLocked(false));
+    
+    // DESCANSO (temporizador 2): ENABLED
     document.addEventListener('rest:start', () => setSudokuLocked(false));
-    document.addEventListener('rest:stop', () => setSudokuLocked(true));
+    
+    // TRABAJO TERMINA: ENABLED
+    document.addEventListener('work:stop', () => setSudokuLocked(false));
+    
+    // DESCANSO TERMINA: ENABLED (no necesitamos hacer nada, pero lo dejamos explícito)
+    document.addEventListener('rest:stop', () => setSudokuLocked(false));
+
+    // Reset: ENABLED (manejado desde pomodoro.js)
+    // Ciclos = 0: ENABLED (manejado desde pomodoro.js)
 
     // Expone un pequeño API por si prefieres llamarlo directo
     window.SudokuLocker = {
