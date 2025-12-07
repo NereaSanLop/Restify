@@ -1,4 +1,19 @@
 [
-  { "src": "assets/music/song1.mp3", "title": "Canción 1" },
-  { "src": "assets/music/song2.mp3", "title": "Canción 2" }
+  { "src": "assets/music/Aeris - The Day We Met (freetouse.com).mp3", "title": "The Day We Met - Aeris (freetouse.com)" },
+  { "src": "assets/music/Aetheric - Wandering Away (freetouse.com).mp3", "title": "Wandering Away - Aetheric (freetouse.com)" },
+  { "src": "assets/music/Alegend - Dawn (freetouse.com).mp3", "title": "Dawn - Alegend (freetouse.com)" },
+  { "src": "assets/music/Another Kid & Pratzapp - Kyoto (freetouse.com).mp3", "title": "Kyoto - Another Kid & Pratzapp (freetouse.com)" },
+  { "src": "assets/music/Avanti - Mindwave (freetouse.com).mp3", "title": "Mindwave - Avanti (freetouse.com)" },
+  { "src": "assets/music/Aylex - Saved by Brothers (freetouse.com).mp3", "title": "Saved by Brothers - Aylex (freetouse.com)" },
+  { "src": "assets/music/Filo Starquez - Passing Time (freetouse.com).mp3", "title": "Passing Time - Filo Starquez (freetouse.com)" },
+  { "src": "assets/music/Hazelwood - Coming Of Age (freetouse.com).mp3", "title": "Coming Of Age - Hazelwood (freetouse.com)" },
+  { "src": "assets/music/Hoffy Beats - Riding the Waves (freetouse.com).mp3", "title": "Riding the Waves - Hoffy Beats (freetouse.com)" },
+  { "src": "assets/music/Kashia - Follow The Light (freetouse.com).mp3", "title": "Follow The Light - Kashia (freetouse.com)" },
+  { "src": "assets/music/massobeats - ocean (freetouse.com).mp3", "title": "ocean - massobeats (freetouse.com)" },
+  { "src": "assets/music/Milky Wayvers - Love in Japan (freetouse.com).mp3", "title": "Love in Japan - Milky Wayvers (freetouse.com)" },
+  { "src": "assets/music/Moavii - Silhouette (freetouse.com).mp3", "title": "Silhouette - Moavii (freetouse.com)" },
+  { "src": "assets/music/Moavii - Warm Cup of Coffe (freetouse.com).mp3", "title": "Warm Cup of Coffe - Moavii (freetouse.com)" },
+  { "src": "assets/music/Sunborn - Deep Within (freetouse.com).mp3", "title": "Deep Within - Sunborn (freetouse.com)" },
+  { "src": "assets/music/Zambolino - Green Hills (freetouse.com).mp3", "title": "Green Hills - Zambolino (freetouse.com)" },
+  { "src": "assets/music/Zambolino - Infinity (freetouse.com).mp3", "title": "Infinity - Zambolino (freetouse.com)" }
 ]
