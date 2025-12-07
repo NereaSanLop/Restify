@@ -9,12 +9,25 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    background-image: url('../assets/img/bluebasegif.gif');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     background-blend-mode: overlay;
     cursor: url('../assets/img/cursor_normal.png'), auto;
+}
+
+/* Modo claro (por defecto) */
+@media (prefers-color-scheme: light) {
+    body {
+        background-image: url('../assets/img/bluebasegif.gif');
+    }
+}
+
+/* Modo oscuro */
+@media (prefers-color-scheme: dark) {
+    body {
+        background-image: url('../assets/img/pinkbasegif.gif');
+    }
 }
 
 main {
@@ -41,9 +54,7 @@ main {
     box-sizing: border-box;
     grid-template-areas:
         "cycles   t1       t2       controls"
-        "sudoku-board   display1 display2 player"
-        ". . . ."
-        ".        .        .        .";
+        "sudoku-board   display1 display2 player";
     grid-auto-flow: dense;
 }
 
@@ -514,8 +525,7 @@ main {
         grid-template-areas:
             "cycles   t1       t2"
             "controls display1   display2"
-            "player sudoku-board ."
-            ".        .        .";
+            "player sudoku-board .";
     }
 }
 
@@ -571,4 +581,24 @@ main {
     background: #dcdcdc !important;
     color: #5e5e5e !important;
     cursor: not-allowed !important;
+}
+
+/* Cursor personalizado para inputs del Sudoku */
+#sudoku-board .sudoku-cell {
+    cursor: url('../assets/img/cursor_input.png'), auto;
+}
+
+/* Cursor normal en las flechitas (spinner) de los inputs number */
+.qt-min::-webkit-outer-spin-button,
+.qt-min::-webkit-inner-spin-button,
+.qt-sec::-webkit-outer-spin-button,
+.qt-sec::-webkit-inner-spin-button,
+#cycle-count::-webkit-outer-spin-button,
+#cycle-count::-webkit-inner-spin-button {
+    cursor: url('../assets/img/cursor_normal.png'), auto;
+}
+
+#sudoku-board .sudoku-cell::-webkit-outer-spin-button,
+#sudoku-board .sudoku-cell::-webkit-inner-spin-button {
+    cursor: url('../assets/img/cursor_normal.png'), auto;
 }
