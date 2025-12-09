@@ -618,5 +618,6 @@ main {
     .sudoku-controls {
         flex-wrap: nowrap;
         overflow-x: visible;
+        font-size: 10px;
     }
 }
