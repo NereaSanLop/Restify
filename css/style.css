@@ -455,6 +455,7 @@ main {
     color: #85411d;
     text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.815);
     cursor: url('../assets/img/cursor_normal.png'), auto;
+    text-align: center;
 }
 
 #sudoku-board {
@@ -584,7 +585,7 @@ main {
 ================================================== */
 
 /* Tablet (<=1024px) */
-@media (max-width: 1024px) {
+@media (max-width: 1150px) {
     #layout-grid {
         grid-template-columns: repeat(3, minmax(180px, 1fr));
         grid-template-areas:
@@ -595,7 +596,7 @@ main {
 }
 
 /* Móvil (<=640px) */
-@media (max-width: 640px) {
+@media (max-width: 870px) {
     #layout-grid {
         grid-template-columns: 1fr;
         grid-template-areas:
@@ -618,5 +619,6 @@ main {
     .sudoku-controls {
         flex-wrap: nowrap;
         overflow-x: visible;
+        font-size: 10px;
     }
 }
