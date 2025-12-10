@@ -610,6 +610,7 @@ main {
     }
     .grid-cell { min-height: 120px; }
     .player-inner { max-width: 100%; }
+    .sudoku-controls { font-size: 80%; }
 }
 
 /* Opcional: en pantallas muy pequeñas permite wrap */
