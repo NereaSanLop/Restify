@@ -35,10 +35,12 @@ Una aplicación web de una sola página que combina gestión del tiempo con func
 
 ### Organización de Módulos
 La aplicación usa tres módulos JavaScript independientes envueltos en IIFEs para evitar contaminar el espacio global
+```
 js/
-├── pomodoro.js # Máquina de estados del temporizador y emisión de eventos
-├── sudoku.js # Generación y validación de rompecabezas
-└── player.js # Control de reproducción de audio
+├── pomodoro.js   # Máquina de estados del temporizador y emisión de eventos
+├── sudoku.js     # Generación y validación de rompecabezas
+└── player.js     # Control de reproducción de audio
+```
 
 ### Comunicación Basada en Eventos
 Los módulos se comunican a través de eventos personalizados del DOM:
@@ -64,18 +66,19 @@ Cuatro tipos de cursor proporcionan retroalimentación visual:
 ---
 
 ## Estructura de Archivos
+```
 Restify/
-├── index.html # Punto de entrada principal
+├── index.html          # Punto de entrada principal
 ├── css/
-│ └── style.css # Grid, diseño responsive, estilos
+│   └── style.css       # Grid, diseño responsive, estilos
 ├── js/
-│ ├── pomodoro.js # Funcionalidad del temporizador
-│ ├── sudoku.js # Lógica del Sudoku
-│ └── player.js # Controles del reproductor
+│   ├── pomodoro.js     # Funcionalidad del temporizador
+│   ├── sudoku.js       # Lógica del Sudoku
+│   └── player.js       # Controles del reproductor
 └── assets/
-├── img/ # Cursores, fondos, iconos
-└── music/ # Pistas de audio y playlist.json
-
+    ├── img/            # Cursores, fondos, iconos
+    └── music/          # Pistas de audio y playlist.json
+```
 ---
 
 ## Cómo Empezar
