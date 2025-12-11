@@ -584,7 +584,7 @@ main {
    MEDIA QUERIES
 ================================================== */
 
-/* Tablet (<=1024px) */
+/* Tablet (<=1150px) */
 @media (max-width: 1150px) {
     #layout-grid {
         grid-template-columns: repeat(3, minmax(180px, 1fr));
@@ -595,7 +595,7 @@ main {
     }
 }
 
-/* Móvil (<=640px) */
+/* Móvil (<=870px) */
 @media (max-width: 870px) {
     #layout-grid {
         grid-template-columns: 1fr;
