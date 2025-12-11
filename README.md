@@ -1,10 +1,10 @@
-Restify - Aplicación Web de Productividad y Relajación  
+# Restify - Aplicación Web de Productividad y Relajación  
 Una aplicación web de una sola página que combina gestión del tiempo con funciones de relajación para ayudarte a mantener el enfoque mientras tomas descansos significativos.
 
 ## Características
 
 ### Temporizador Pomodoro
-- Períodos de trabajo y descanso configurables con entradas de minutos/segundos
+- Periodos de trabajo y descanso configurables con entradas de minutos/segundos
 - Conteo de ciclos personalizable para sesiones repetidas de trabajo/descanso
 - Máquina de estados que gestiona las fases detenido/trabajo/descanso con transiciones automáticas
 - Sistema de eventos para controlar otros módulos durante las fases del temporizador
@@ -15,7 +15,7 @@ Una aplicación web de una sola página que combina gestión del tiempo con func
 - Validación de solución basada en las reglas del Sudoku
 - Integración con modo de enfoque: se bloquea durante periodos de trabajo y se desbloquea durante descansos
 
-### 🎵 Reproductor de Música Lofi
+### Reproductor de Música Lofi
 - Gestión de playlist con pistas cargadas desde assets/music/playlist.json  
 - Controles de reproducción completos: reproducir, pausar, siguiente, anterior  
 - Barra de progreso interactiva con soporte para ratón y táctil  
@@ -46,7 +46,7 @@ Los módulos se comunican a través de eventos personalizados del DOM:
 - **work:start** – Bloquea el Sudoku durante el tiempo de enfoque
 - **rest:start** – Desbloquea el Sudoku durante los descansos
 
-### Diseño Responsivo
+### Diseño Responsive
 El diseño con CSS Grid se adapta a tres puntos de ruptura:
 
 - **Escritorio**: diseño en cuadrícula 4×4  
@@ -67,7 +67,7 @@ Cuatro tipos de cursor proporcionan retroalimentación visual:
 Restify/
 ├── index.html # Punto de entrada principal
 ├── css/
-│ └── style.css # Grid, diseño responsivo, estilos
+│ └── style.css # Grid, diseño responsive, estilos
 ├── js/
 │ ├── pomodoro.js # Funcionalidad del temporizador
 │ ├── sudoku.js # Lógica del Sudoku
@@ -80,4 +80,12 @@ Restify/
 
 ## Cómo Empezar
 1. Entra en https://nereasanlop.github.io/Restify/ y a trabajar!
+
+---
+
+## Uso
+- **Configura tu sesión Pomodoro:** establece duración del trabajo, duración del descanso y número de ciclos  
+- **Inicia el temporizador:** haz clic en *start* para comenzar la sesión de enfoque — el Sudoku se bloqueará  
+- **Toma descansos:** durante los descansos, el Sudoku se desbloquea para relajación mental  
+- **Disfruta la música:** usa el reproductor para escuchar pistas lofi mientras trabajas o descansas  
 
