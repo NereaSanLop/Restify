@@ -246,7 +246,6 @@
         const audio = document.getElementById('audio');
         const volumeSlider = document.getElementById('volume-slider');
         const volumeValue = document.getElementById('volume-value');
-        const muteBtn = document.getElementById('mute-btn');
         let previousVolume = 100;
 
         if (audio && volumeSlider) {
@@ -262,36 +261,6 @@
                     audio.volume = volume;
                     previousVolume = e.target.value;
                     if (volumeValue) volumeValue.textContent = `${e.target.value}%`;
-                    
-                    if (volume === 0) {
-                        muteBtn.classList.remove('volume-btn-on');
-                        muteBtn.classList.add('volume-btn-off');
-                    } else {
-                        muteBtn.classList.remove('volume-btn-off');
-                        muteBtn.classList.add('volume-btn-on');
-                    }
-                }
-            });
-        }
-
-        if (muteBtn) {
-            muteBtn.addEventListener('click', () => {
-                if (audio.volume > 0) {
-                    previousVolume = volumeSlider.value;
-                    audio.volume = 0;
-                    volumeSlider.value = 0;
-                    if (volumeValue) volumeValue.textContent = '0%';
-                    muteBtn.classList.remove('volume-btn-on');
-                    muteBtn.classList.add('volume-btn-off');
-                    muteBtn.title = 'Activar sonido';
-                } else {
-                    const restoreVolume = previousVolume || 100;
-                    audio.volume = restoreVolume / 100;
-                    volumeSlider.value = restoreVolume;
-                    if (volumeValue) volumeValue.textContent = `${restoreVolume}%`;
-                    muteBtn.classList.remove('volume-btn-off');
-                    muteBtn.classList.add('volume-btn-on');
-                    muteBtn.title = 'Silenciar';
                 }
             });
         }
