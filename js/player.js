@@ -2,8 +2,7 @@
 (function () {
     document.addEventListener('DOMContentLoaded', () => {
         const audio = document.getElementById('audio');
-        const playBtn = document.getElementById('player-play');
-        const pauseBtn = document.getElementById('player-pause');
+        const playPauseBtn = document.getElementById('player-play-pause');
         const rewBtn = document.getElementById('player-rew');
         const fwdBtn = document.getElementById('player-fwd');
         const progress = document.getElementById('player-progress');
@@ -11,7 +10,7 @@
         const playerTrack = document.getElementById('player-track');
         const SEEK_SECONDS = 10;
 
-        if (!audio || !playBtn || !pauseBtn || !rewBtn || !fwdBtn || !progress || !progressBar) {
+        if (!audio || !playPauseBtn || !rewBtn || !fwdBtn || !progress || !progressBar) {
             console.error('Player: faltan elementos en el DOM. Asegúrate de que index.html contiene el markup del player con los ids correctos.');
             return;
         }
@@ -19,14 +18,27 @@
         let playlist = [];
         let currentIndex = 0;
         let isLoaded = false;
-        let isDragging = false; // Variable para controlar el arrastre
+        let isDragging = false;
 
         function setButtonsEnabled(enabled) {
-            [playBtn, pauseBtn, rewBtn, fwdBtn].forEach(b => b.disabled = !enabled);
+            [playPauseBtn, rewBtn, fwdBtn].forEach(b => b.disabled = !enabled);
         }
 
-        // mantener siempre habilitados (según petición)
         setButtonsEnabled(true);
+
+        function updatePlayPauseButton() {
+            if (audio.paused) {
+                playPauseBtn.classList.remove('player-btn-pause');
+                playPauseBtn.classList.add('player-btn-play');
+                playPauseBtn.title = 'Reproducir';
+                playPauseBtn.setAttribute('aria-label', 'Reproducir');
+            } else {
+                playPauseBtn.classList.remove('player-btn-play');
+                playPauseBtn.classList.add('player-btn-pause');
+                playPauseBtn.title = 'Pausar';
+                playPauseBtn.setAttribute('aria-label', 'Pausar');
+            }
+        }
 
         function updateProgress() {
             if (!audio.duration || !isFinite(audio.duration)) return;
@@ -46,7 +58,6 @@
         }
 
         function loadDefaultFallback() {
-            // rutas relativas desde la página: assets/music/...
             return [
                 'assets/music/song1.mp3',
                 'assets/music/song2.mp3'
@@ -64,14 +75,12 @@
             if (!playlist.length) return;
             currentIndex = ((index % playlist.length) + playlist.length) % playlist.length;
 
-            // Soporte para playlist con strings u objetos { src, title }
             const entry = playlist[currentIndex];
             const src = typeof entry === 'string' ? entry : (entry && entry.src) ? entry.src : '';
             const title = (entry && (entry.title || entry.name)) ? (entry.title || entry.name) : null;
 
             if (!src) return;
 
-            // Guarda título en data-title si viene en la playlist
             if (title) {
                 audio.dataset.title = title;
             } else {
@@ -79,8 +88,6 @@
             }
 
             audio.src = src;
-
-            // Actualiza el nombre de la pista de inmediato
             updateTrackName();
 
             isLoaded = true;
@@ -91,7 +98,7 @@
             }
         }
 
-        function playCurrent() {
+        function togglePlayPause() {
             if (!isLoaded) {
                 ensurePlaylist().then(() => {
                     if (!playlist.length) return;
@@ -99,12 +106,15 @@
                 });
                 return;
             }
-            audio.play().catch(e => {
-                console.info('player: play() falló:', e && e.message);
-            });
-        }
 
-        function pauseCurrent() { audio.pause(); }
+            if (audio.paused) {
+                audio.play().catch(e => {
+                    console.info('player: play() falló:', e && e.message);
+                });
+            } else {
+                audio.pause();
+            }
+        }
 
         function nextTrack(autoplay = true) {
             if (!playlist.length) return;
@@ -136,7 +146,6 @@
             playerTrack.textContent = title;
         }
 
-        // Función para actualizar posición según click/arrastre
         function seekToPosition(e) {
             if (!audio.duration || !isFinite(audio.duration)) return;
             const rect = progress.getBoundingClientRect();
@@ -147,8 +156,7 @@
         }
 
         // Event listeners botones
-        playBtn.addEventListener('click', () => playCurrent());
-        pauseBtn.addEventListener('click', () => pauseCurrent());
+        playPauseBtn.addEventListener('click', () => togglePlayPause());
         rewBtn.addEventListener('click', () => prevTrack());
         fwdBtn.addEventListener('click', () => nextTrack());
 
@@ -165,7 +173,11 @@
             nextTrack(true);
         });
 
-        // Event listeners para barra de progreso - ARRASTRE
+        // Actualizar botón cuando cambia el estado de reproducción
+        audio.addEventListener('play', updatePlayPauseButton);
+        audio.addEventListener('pause', updatePlayPauseButton);
+
+        // Event listeners para barra de progreso
         progress.addEventListener('mousedown', (e) => {
             isDragging = true;
             seekToPosition(e);
@@ -181,7 +193,6 @@
             isDragging = false;
         });
 
-        // Soporte para dispositivos táctiles
         progress.addEventListener('touchstart', (e) => {
             isDragging = true;
             const touch = e.touches[0];
@@ -199,9 +210,12 @@
             isDragging = false;
         });
 
-        // Cargar playlist al inicio (no bloqueante)
+        // Cargar playlist al inicio
         ensurePlaylist().then(() => {
-            if (playlist.length) loadTrack(0, false);
+            if (playlist.length) {
+                loadTrack(0, false);
+                updatePlayPauseButton(); // Inicializar el botón en estado pause
+            }
         });
 
         window._simplePlayer = { audio, playlist, loadTrack, nextTrack, prevTrack, updateProgress };
@@ -216,14 +230,12 @@
     const muteBtn = document.getElementById('mute-btn');
     let previousVolume = 100;
 
-    // Configurar volumen inicial
     if (audio && volumeSlider) {
         audio.volume = 1.0;
         volumeSlider.value = 100;
         if (volumeValue) volumeValue.textContent = '100%';
     }
 
-    // Control del slider de volumen
     if (volumeSlider) {
         volumeSlider.addEventListener('input', (e) => {
             const volume = e.target.value / 100;
@@ -232,7 +244,6 @@
                 previousVolume = e.target.value;
                 if (volumeValue) volumeValue.textContent = `${e.target.value}%`;
                 
-                // Actualizar icono del botón mute
                 if (volume === 0) {
                     muteBtn.classList.remove('volume-btn-on');
                     muteBtn.classList.add('volume-btn-off');
@@ -244,11 +255,9 @@
         });
     }
 
-    // Botón de mute/unmute
     if (muteBtn) {
         muteBtn.addEventListener('click', () => {
             if (audio.volume > 0) {
-                // Mutear
                 previousVolume = volumeSlider.value;
                 audio.volume = 0;
                 volumeSlider.value = 0;
@@ -257,7 +266,6 @@
                 muteBtn.classList.add('volume-btn-off');
                 muteBtn.title = 'Activar sonido';
             } else {
-                // Desmutear
                 const restoreVolume = previousVolume || 100;
                 audio.volume = restoreVolume / 100;
                 volumeSlider.value = restoreVolume;
