@@ -346,13 +346,22 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 15px;
     margin-top: 0.75rem;
     box-sizing: border-box;
 }
 
-.player-inner {
+.player-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 15px;
     width: 100%;
-    max-width: 360px;
+    max-width: 420px;
+}
+
+.player-inner {
+    flex: 1;
     padding: 0.75rem;
     border-radius: 12px;
     box-sizing: border-box;
@@ -647,6 +656,97 @@ main {
     font-weight: 600;
     color: #85411d;
     text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.815);
+}
+
+/* ==================================================
+   CONTROL DE VOLUMEN
+================================================== */
+.volume-control {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    max-width: 250px;
+    padding: 0.75rem;
+    min-height: 11px;
+    justify-content: space-around;
+}
+
+.volume-label {
+    font-family: monospace, sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: #85411d;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.815);
+    text-align: center;
+}
+
+#volume-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 80px;
+    height: 6px;
+    background: rgba(255, 190, 149, 0.574);
+    border-radius: 6px;
+    outline: none;
+    cursor: url('../assets/img/cursor_mano.png'), auto;
+    transform: rotate(-90deg);
+    transform-origin: center;
+    padding: 0;
+    margin: 40px 0;
+}
+
+#volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none !important;
+    width: 24px !important;
+    height: 24px !important;
+    background: linear-gradient(90deg, #fce7a4, #ff8282) !important;
+    border-radius: 50% !important;
+    cursor: url('../assets/img/cursor_mano.png'), auto !important;
+    border: 2px solid #752500 !important;
+}
+
+#volume-slider::-moz-range-thumb {
+    width: 24px !important;
+    height: 24px !important;
+    background: linear-gradient(90deg, #fce7a4, #ff8282) !important;
+    border-radius: 50% !important;
+    cursor: url('../assets/img/cursor_mano.png'), auto !important;
+    border: 2px solid #752500 !important;
+}
+
+#volume-value {
+    font-family: monospace, sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: #85411d;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.815);
+}
+
+/* Botón de mute */
+.volume-btn {
+    width: 32px;
+    height: 32px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 32px 32px;
+    border: none;
+    padding: 0;
+    border-radius: 6px;
+    cursor: url('../assets/img/cursor_mano.png'), auto;
+}
+
+.volume-btn:hover {
+    background-size: 34px 34px;
+}
+
+.volume-btn-on {
+    background-image: url('../assets/img/volume_on.png');
+}
+
+.volume-btn-off {
+    background-image: url('../assets/img/volume_off.png');
 }
 
 /* ==================================================

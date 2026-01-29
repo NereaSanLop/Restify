@@ -207,3 +207,65 @@
         window._simplePlayer = { audio, playlist, loadTrack, nextTrack, prevTrack, updateProgress };
     });
 })();
+
+// Control de volumen y mute
+(function() {
+    const audio = document.getElementById('audio');
+    const volumeSlider = document.getElementById('volume-slider');
+    const volumeValue = document.getElementById('volume-value');
+    const muteBtn = document.getElementById('mute-btn');
+    let previousVolume = 100;
+
+    // Configurar volumen inicial
+    if (audio && volumeSlider) {
+        audio.volume = 1.0;
+        volumeSlider.value = 100;
+        if (volumeValue) volumeValue.textContent = '100%';
+    }
+
+    // Control del slider de volumen
+    if (volumeSlider) {
+        volumeSlider.addEventListener('input', (e) => {
+            const volume = e.target.value / 100;
+            if (audio) {
+                audio.volume = volume;
+                previousVolume = e.target.value;
+                if (volumeValue) volumeValue.textContent = `${e.target.value}%`;
+                
+                // Actualizar icono del botón mute
+                if (volume === 0) {
+                    muteBtn.classList.remove('volume-btn-on');
+                    muteBtn.classList.add('volume-btn-off');
+                } else {
+                    muteBtn.classList.remove('volume-btn-off');
+                    muteBtn.classList.add('volume-btn-on');
+                }
+            }
+        });
+    }
+
+    // Botón de mute/unmute
+    if (muteBtn) {
+        muteBtn.addEventListener('click', () => {
+            if (audio.volume > 0) {
+                // Mutear
+                previousVolume = volumeSlider.value;
+                audio.volume = 0;
+                volumeSlider.value = 0;
+                if (volumeValue) volumeValue.textContent = '0%';
+                muteBtn.classList.remove('volume-btn-on');
+                muteBtn.classList.add('volume-btn-off');
+                muteBtn.title = 'Activar sonido';
+            } else {
+                // Desmutear
+                const restoreVolume = previousVolume || 100;
+                audio.volume = restoreVolume / 100;
+                volumeSlider.value = restoreVolume;
+                if (volumeValue) volumeValue.textContent = `${restoreVolume}%`;
+                muteBtn.classList.remove('volume-btn-off');
+                muteBtn.classList.add('volume-btn-on');
+                muteBtn.title = 'Silenciar';
+            }
+        });
+    }
+})();
