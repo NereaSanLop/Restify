@@ -1,6 +1,11 @@
 // Reproductor simple con playlist desde assets/music y loop al final -> primera
 (function () {
+    let _playerInitDone = false;
+    let _playerInitRetries = 0;
+
     function initPlayer() {
+        if (_playerInitDone) return;
+
         const audio = document.getElementById('audio');
         const playPauseBtn = document.getElementById('player-play-pause');
         const rewBtn = document.getElementById('player-rew');
@@ -11,9 +16,16 @@
         const SEEK_SECONDS = 10;
 
         if (!audio || !playPauseBtn || !rewBtn || !fwdBtn || !progress || !progressBar) {
+            if (_playerInitRetries < 20) {
+                _playerInitRetries++;
+                setTimeout(initPlayer, 100);
+                return;
+            }
             console.error('Player: faltan elementos en el DOM. Asegúrate de que index.html contiene el markup del player con los ids correctos.');
             return;
         }
+
+        _playerInitDone = true;
 
         let playlist = [];
         let currentIndex = 0;
