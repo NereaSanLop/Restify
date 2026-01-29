@@ -54,7 +54,8 @@ main {
     box-sizing: border-box;
     grid-template-areas:
         "cycles   t1       t2       controls"
-        "sudoku-board   display1 display2 player";
+        "sudoku-board   display1 display2 player"
+        "sudoku-board   bgspeed  . .";
     grid-auto-flow: dense;
 }
 
@@ -72,6 +73,7 @@ main {
 .area-display1 { grid-area: display1; }
 .area-display2 { grid-area: display2; }
 .area-sudoku-board { grid-area: sudoku-board; }
+.area-bgspeed { grid-area: bgspeed; }
 
 /* Centrado de contenido en celdas clave */
 .area-sudoku,
@@ -82,7 +84,8 @@ main {
 .area-t2,
 .area-display1,
 .area-display2,
-.area-sudoku-board {
+.area-sudoku-board,
+.area-bgspeed {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -485,6 +488,13 @@ main {
     cursor: url('../assets/img/cursor_normal.png'), auto;
 }
 
+.area-bgspeed {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 0;
+}
+
 .sudoku-controls {
     display: flex;
     flex-direction: row;
@@ -581,6 +591,65 @@ main {
 }
 
 /* ==================================================
+   CONTROL DE VELOCIDAD DEL GIF
+================================================== */
+.speed-control {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    max-width: 250px;
+}
+
+.speed-label {
+    font-family: monospace, sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: #85411d;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.815);
+    text-align: center;
+}
+
+#gif-speed {
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 190, 149, 0.574);
+    border-radius: 6px;
+    outline: none;
+    cursor: url('../assets/img/cursor_mano.png'), auto;
+    -webkit-appearance: none;
+}
+
+#gif-speed::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    background: linear-gradient(90deg, #fce7a4, #ff8282);
+    border-radius: 50%;
+    cursor: url('../assets/img/cursor_mano.png'), auto;
+    border: 2px solid #752500;
+}
+
+#gif-speed::-moz-range-thumb {
+    width: 24px;
+    height: 24px;
+    background: linear-gradient(90deg, #fce7a4, #ff8282);
+    border-radius: 50%;
+    cursor: url('../assets/img/cursor_mano.png'), auto;
+    border: 2px solid #752500;
+}
+
+#speed-value {
+    font-family: monospace, sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: #85411d;
+    text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.815);
+}
+
+/* ==================================================
    MEDIA QUERIES
 ================================================== */
 
@@ -591,7 +660,7 @@ main {
         grid-template-areas:
             "cycles   t1       t2"
             "controls display1   display2"
-            "player sudoku-board .";
+            "player sudoku-board bgspeed";
     }
 }
 
@@ -607,6 +676,7 @@ main {
             "display2"
             "controls"
             "player"
+            "bgspeed"
             "sudoku-board";
     }
     .grid-cell { min-height: 120px; }

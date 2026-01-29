@@ -110,6 +110,13 @@
             <!-- Fila 2 -->
             <div class="grid-cell r2c0" data-pos="0,2"></div>
             <div class="grid-cell r2c1" data-pos="1,2"></div>
+            <div class="grid-cell r2c1 area-bgspeed">
+                <div class="speed-control">
+                    <label for="gif-speed" class="speed-label">Velocidad del fondo</label>
+                    <input type="range" id="gif-speed" min="0" max="2" step="0.1" value="1">
+                    <span id="speed-value">1x</span>
+                </div>
+            </div>
             <div class="grid-cell r2c2" data-pos="2,2"></div>
             <div class="grid-cell r2c3" data-pos="3,2"></div>
 
@@ -128,5 +135,6 @@
     <script src="js/pomodoro.js"></script>
     <script src="js/player.js"></script>
     <script src="js/sudoku.js"></script>
+    <script src="js/gifSpeed.js"></script>
  </body>
  </html>
