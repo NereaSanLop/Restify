@@ -1,4 +1,8 @@
 (function () {
+    // Audio notifications - Sound Effect by "https://pixabay.com/es/users/dragon-studio-38165424/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=372476"
+    const audioInicioDescanso = new Audio('assets/sounds/notificacion_ini_descanso.mp3');
+    const audioInicioTrabajo = new Audio('assets/sounds/notificacion_ini_trabajo.mp3');
+    
     // Helpers
     function pad(n) { return n < 10 ? '0' + n : '' + n; }
     function formatSeconds(s) {
@@ -8,6 +12,12 @@
     }
     // Emisor de eventos globales (work/rest start/stop)
     function emit(name) { document.dispatchEvent(new CustomEvent(name)); }
+    
+    // Reproducir notificación de audio
+    function playNotification(audio) {
+        audio.currentTime = 0;
+        audio.play().catch(err => console.error('Error al reproducir audio:', err));
+    }
 
     // Elements
     const q = id => document.getElementById(id);
@@ -100,6 +110,7 @@
                 qt1Display.textContent = formatSeconds(rem1);
             }
             if (rem1 === 0) {
+                playNotification(audioInicioDescanso);
                 if (rem2 > 0) {
                     updatePhase(2);
                 } else {
@@ -112,6 +123,7 @@
                 qt2Display.textContent = formatSeconds(rem2);
             }
             if (rem2 === 0) {
+                playNotification(audioInicioTrabajo);
                 handleCycleComplete();
             }
         }
